@@ -1,0 +1,7 @@
+(sym_lib_table
+  (lib (name Symbols)(type Legacy)(uri ${KIPRJMOD}/Symbols.lib)(options "")(descr ""))
+  (lib (name dk_Data-Acquisition-Digital-to-Analog-Converters-DAC)(type Legacy)(uri /Users/Brian/Documents/KiCad/Libraries/digikey-kicad-library/digikey-symbols/dk_Data-Acquisition-Digital-to-Analog-Converters-DAC.lib)(options "")(descr ""))
+  (lib (name pepin_con)(type Legacy)(uri /Users/Brian/Documents/KiCad/Libraries/pepin-kicad-library/pepin_symbols/pepin_con.lib)(options "")(descr ""))
+  (lib (name dk_Transistors-FETs-MOSFETs-Arrays)(type Legacy)(uri /Users/Brian/Documents/KiCad/Libraries/digikey-kicad-library/digikey-symbols/dk_Transistors-FETs-MOSFETs-Arrays.lib)(options "")(descr ""))
+  (lib (name dk_Transistors-FETs-MOSFETs-Single)(type Legacy)(uri /Users/Brian/Documents/KiCad/Libraries/digikey-kicad-library/digikey-symbols/dk_Transistors-FETs-MOSFETs-Single.lib)(options "")(descr ""))
+)

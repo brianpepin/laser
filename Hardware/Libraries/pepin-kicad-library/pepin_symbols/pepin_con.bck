@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP DEANS
+D DEANS CONNECTOR
+K 1568-1659-ND
+F http://cdn.sparkfun.com/datasheets/Prototyping/deans_connector_PRT-11864.pdf
+$ENDCMP
+#
+#End Doc Library

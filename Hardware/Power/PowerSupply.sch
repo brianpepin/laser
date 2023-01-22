@@ -1,0 +1,926 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A 11000 8500
+encoding utf-8
+Sheet 1 6
+Title "Power Board"
+Date "2021-11-07"
+Rev "1.5"
+Comp "Brian Pepin"
+Comment1 "Laser Output 1-4v 50A max per channel"
+Comment2 "Charger LiPo 2s 4A"
+Comment3 "Interlock power control to 120A"
+Comment4 "3v, 5v supplies."
+$EndDescr
+$Comp
+L pepin_con:DEANS IN1
+U 1 1 5ED829A0
+P 1500 5550
+F 0 "IN1" H 1618 5550 50  0000 L CNN
+F 1 "DEANS" H 1550 5400 50  0001 C CNN
+F 2 "pepin-footprints:Connector_Deans_Male" H 1500 5550 50  0001 C CNN
+F 3 "http://cdn.sparkfun.com/datasheets/Prototyping/deans_connector_PRT-11864.pdf" H 1500 5550 50  0001 C CNN
+	1    1500 5550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1400 5500 1350 5500
+Wire Wire Line
+	1350 5500 1350 5400
+Wire Wire Line
+	1400 5600 1350 5600
+Wire Wire Line
+	1350 5600 1350 5700
+$Comp
+L power:+BATT #PWR04
+U 1 1 5ED9AF89
+P 1350 5400
+F 0 "#PWR04" H 1350 5250 50  0001 C CNN
+F 1 "+BATT" H 1350 5550 50  0000 C CNN
+F 2 "" H 1350 5400 50  0001 C CNN
+F 3 "" H 1350 5400 50  0001 C CNN
+	1    1350 5400
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG01
+U 1 1 5EDC8771
+P 900 1000
+F 0 "#FLG01" H 900 1075 50  0001 C CNN
+F 1 "PWR_FLAG" H 900 1173 50  0000 C CNN
+F 2 "" H 900 1000 50  0001 C CNN
+F 3 "~" H 900 1000 50  0001 C CNN
+	1    900  1000
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG03
+U 1 1 5EDC8E79
+P 1800 1000
+F 0 "#FLG03" H 1800 1075 50  0001 C CNN
+F 1 "PWR_FLAG" H 1800 1173 50  0000 C CNN
+F 2 "" H 1800 1000 50  0001 C CNN
+F 3 "~" H 1800 1000 50  0001 C CNN
+	1    1800 1000
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:+BATT #PWR01
+U 1 1 5EDC9D1B
+P 900 950
+F 0 "#PWR01" H 900 800 50  0001 C CNN
+F 1 "+BATT" H 900 1100 50  0000 C CNN
+F 2 "" H 900 950 50  0001 C CNN
+F 3 "" H 900 950 50  0001 C CNN
+	1    900  950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	900  950  900  1000
+$Comp
+L power:+3V3 #PWR07
+U 1 1 5EDD7D7E
+P 1800 950
+F 0 "#PWR07" H 1800 800 50  0001 C CNN
+F 1 "+3V3" H 1850 1100 50  0000 C CNN
+F 2 "" H 1800 950 50  0001 C CNN
+F 3 "" H 1800 950 50  0001 C CNN
+	1    1800 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1800 950  1800 1000
+$Comp
+L Mechanical:MountingHole_Pad H3
+U 1 1 6143DCB8
+P 9700 5900
+F 0 "H3" H 9800 5946 50  0000 L CNN
+F 1 "MountingHole" H 9800 5850 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 9700 5900 50  0001 C CNN
+F 3 "~" H 9700 5900 50  0001 C CNN
+	1    9700 5900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole_Pad H1
+U 1 1 6143E5BB
+P 9500 5900
+F 0 "H1" H 9300 5950 50  0000 L CNN
+F 1 "MountingHole" H 8900 5850 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 9500 5900 50  0001 C CNN
+F 3 "~" H 9500 5900 50  0001 C CNN
+	1    9500 5900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole_Pad H2
+U 1 1 6143E836
+P 9500 6350
+F 0 "H2" H 9300 6400 50  0000 L CNN
+F 1 "MountingHole" H 8900 6300 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 9500 6350 50  0001 C CNN
+F 3 "~" H 9500 6350 50  0001 C CNN
+	1    9500 6350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole_Pad H4
+U 1 1 6143F30F
+P 9700 6350
+F 0 "H4" H 9800 6399 50  0000 L CNN
+F 1 "MountingHole" H 9800 6308 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 9700 6350 50  0001 C CNN
+F 3 "~" H 9700 6350 50  0001 C CNN
+	1    9700 6350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_02x07_Odd_Even MCU1
+U 1 1 6036BEF0
+P 3800 3500
+F 0 "MCU1" H 3850 4017 50  0000 C CNN
+F 1 "2-1761605-5" H 3850 3926 50  0000 C CNN
+F 2 "Connector_IDC:IDC-Header_2x07_P2.54mm_Horizontal" H 3800 3500 50  0001 C CNN
+F 3 "~" H 3800 3500 50  0001 C CNN
+F 4 "2-1761605-5" H 3800 3500 50  0001 C CNN "PartNo"
+	1    3800 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:EMI_Filter_CLC FL7
+U 1 1 6039274A
+P 4250 2800
+F 0 "FL7" H 4550 2800 50  0000 C CNN
+F 1 "NFL21SP206X1C7D" H 4250 3026 50  0001 C CNN
+F 2 "pepin-footprints:EMI_805" V 4250 2800 50  0001 C CNN
+F 3 "http://www.murata.com/~/media/webrenewal/support/library/catalog/products/emc/emifil/c31e.ashx?la=en-gb" V 4250 2800 50  0001 C CNN
+F 4 "NFL21SP206X1C7D" H 4250 2800 50  0001 C CNN "PartNo"
+	1    4250 2800
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:EMI_Filter_CLC FL9
+U 1 1 6039A513
+P 5150 2800
+F 0 "FL9" H 5450 2800 50  0000 C CNN
+F 1 "NFL21SP206X1C7D" H 5150 3026 50  0001 C CNN
+F 2 "pepin-footprints:EMI_805" V 5150 2800 50  0001 C CNN
+F 3 "http://www.murata.com/~/media/webrenewal/support/library/catalog/products/emc/emifil/c31e.ashx?la=en-gb" V 5150 2800 50  0001 C CNN
+F 4 "NFL21SP206X1C7D" H 5150 2800 50  0001 C CNN "PartNo"
+	1    5150 2800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4150 3200 4100 3200
+NoConn ~ 4600 3500
+NoConn ~ 4600 3600
+Wire Wire Line
+	4150 2500 4150 2350
+Wire Wire Line
+	5050 2500 5050 2350
+$Comp
+L Device:EMI_Filter_CLC FL5
+U 1 1 609997E1
+P 2950 2800
+F 0 "FL5" H 3250 2800 50  0000 C CNN
+F 1 "NFL21SP206X1C7D" H 2950 3026 50  0001 C CNN
+F 2 "pepin-footprints:EMI_805" V 2950 2800 50  0001 C CNN
+F 3 "http://www.murata.com/~/media/webrenewal/support/library/catalog/products/emc/emifil/c31e.ashx?la=en-gb" V 2950 2800 50  0001 C CNN
+F 4 "NFL21SP206X1C7D" H 2950 2800 50  0001 C CNN "PartNo"
+	1    2950 2800
+	0    1    -1   0   
+$EndComp
+$Comp
+L Device:EMI_Filter_CLC FL4
+U 1 1 6099A543
+P 2450 2800
+F 0 "FL4" H 2750 2800 50  0000 C CNN
+F 1 "NFL21SP206X1C7D" H 2450 3026 50  0001 C CNN
+F 2 "pepin-footprints:EMI_805" V 2450 2800 50  0001 C CNN
+F 3 "http://www.murata.com/~/media/webrenewal/support/library/catalog/products/emc/emifil/c31e.ashx?la=en-gb" V 2450 2800 50  0001 C CNN
+F 4 "NFL21SP206X1C7D" H 2450 2800 50  0001 C CNN "PartNo"
+	1    2450 2800
+	0    1    -1   0   
+$EndComp
+$Comp
+L Device:EMI_Filter_CLC FL3
+U 1 1 6099B7C4
+P 2000 2800
+F 0 "FL3" H 2300 2800 50  0000 C CNN
+F 1 "NFL21SP206X1C7D" H 2000 3026 50  0001 C CNN
+F 2 "pepin-footprints:EMI_805" V 2000 2800 50  0001 C CNN
+F 3 "http://www.murata.com/~/media/webrenewal/support/library/catalog/products/emc/emifil/c31e.ashx?la=en-gb" V 2000 2800 50  0001 C CNN
+F 4 "NFL21SP206X1C7D" H 2000 2800 50  0001 C CNN "PartNo"
+	1    2000 2800
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	3600 3200 3500 3200
+Wire Wire Line
+	3500 3200 3500 2550
+NoConn ~ 3050 3600
+$Comp
+L power:+3V3 #PWR019
+U 1 1 60B997A4
+P 3500 2550
+F 0 "#PWR019" H 3500 2400 50  0001 C CNN
+F 1 "+3V3" H 3500 2700 50  0000 C CNN
+F 2 "" H 3500 2550 50  0001 C CNN
+F 3 "" H 3500 2550 50  0001 C CNN
+	1    3500 2550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2100 2500 2100 2350
+Wire Wire Line
+	2550 2500 2550 2350
+Wire Wire Line
+	3050 2500 3050 2350
+$Comp
+L power:GND #PWR05
+U 1 1 60C44803
+P 1350 5700
+F 0 "#PWR05" H 1350 5450 50  0001 C CNN
+F 1 "GND" H 1355 5527 50  0000 C CNN
+F 2 "" H 1350 5700 50  0001 C CNN
+F 3 "" H 1350 5700 50  0001 C CNN
+	1    1350 5700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3050 3300 3600 3300
+Wire Wire Line
+	3050 3100 3050 3300
+Wire Wire Line
+	2800 2850 2800 2800
+Wire Wire Line
+	2800 2800 2850 2800
+Wire Wire Line
+	2550 3400 3600 3400
+Wire Wire Line
+	2550 3100 2550 3400
+Wire Wire Line
+	2300 2850 2300 2800
+Wire Wire Line
+	2300 2800 2350 2800
+Wire Wire Line
+	2100 3500 3600 3500
+Wire Wire Line
+	2100 3100 2100 3500
+Wire Wire Line
+	1850 2850 1850 2800
+Wire Wire Line
+	1850 2800 1900 2800
+Wire Wire Line
+	4150 3100 4150 3200
+Wire Wire Line
+	4350 2800 4400 2800
+Wire Wire Line
+	4400 2800 4400 2850
+Wire Wire Line
+	4100 3300 4600 3300
+Wire Wire Line
+	4100 3400 5050 3400
+Wire Wire Line
+	5050 3100 5050 3400
+Wire Wire Line
+	5250 2800 5300 2800
+Wire Wire Line
+	5300 2800 5300 2850
+$Comp
+L power:GND #PWR08
+U 1 1 60C91F09
+P 1850 2850
+F 0 "#PWR08" H 1850 2600 50  0001 C CNN
+F 1 "GND" H 1855 2677 50  0000 C CNN
+F 2 "" H 1850 2850 50  0001 C CNN
+F 3 "" H 1850 2850 50  0001 C CNN
+	1    1850 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR010
+U 1 1 60C92AEE
+P 2300 2850
+F 0 "#PWR010" H 2300 2600 50  0001 C CNN
+F 1 "GND" H 2305 2677 50  0000 C CNN
+F 2 "" H 2300 2850 50  0001 C CNN
+F 3 "" H 2300 2850 50  0001 C CNN
+	1    2300 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR014
+U 1 1 60C92E1D
+P 2800 2850
+F 0 "#PWR014" H 2800 2600 50  0001 C CNN
+F 1 "GND" H 2805 2677 50  0000 C CNN
+F 2 "" H 2800 2850 50  0001 C CNN
+F 3 "" H 2800 2850 50  0001 C CNN
+	1    2800 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR021
+U 1 1 60C93800
+P 4400 2850
+F 0 "#PWR021" H 4400 2600 50  0001 C CNN
+F 1 "GND" H 4405 2677 50  0000 C CNN
+F 2 "" H 4400 2850 50  0001 C CNN
+F 3 "" H 4400 2850 50  0001 C CNN
+	1    4400 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR025
+U 1 1 60C942F3
+P 5300 2850
+F 0 "#PWR025" H 5300 2600 50  0001 C CNN
+F 1 "GND" H 5305 2677 50  0000 C CNN
+F 2 "" H 5300 2850 50  0001 C CNN
+F 3 "" H 5300 2850 50  0001 C CNN
+	1    5300 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR020
+U 1 1 60C94886
+P 4150 3850
+F 0 "#PWR020" H 4150 3600 50  0001 C CNN
+F 1 "GND" H 4155 3677 50  0000 C CNN
+F 2 "" H 4150 3850 50  0001 C CNN
+F 3 "" H 4150 3850 50  0001 C CNN
+	1    4150 3850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4100 3800 4150 3800
+Wire Wire Line
+	4150 3800 4150 3850
+$Sheet
+S 8300 900  1750 600 
+U 60CBB163
+F0 "LaserDriver" 50
+F1 "LaserDriver.sch" 50
+$EndSheet
+Wire Wire Line
+	3600 3600 3050 3600
+Text Label 3050 3600 0    50   ~ 0
+CS_TEC_READ
+Wire Wire Line
+	4100 3600 4600 3600
+Wire Wire Line
+	4100 3500 4600 3500
+Text Label 4600 3500 2    50   ~ 0
+CS_TEC_SET
+Text Label 4600 3600 2    50   ~ 0
+TEC_ENABLE
+Text GLabel 5050 2350 1    50   Input ~ 0
+~RST_LASER
+Text GLabel 4600 2350 1    50   Input ~ 0
+SCK
+Text GLabel 4150 2350 1    50   Input ~ 0
+MOSI
+Text GLabel 3050 2350 1    50   Input ~ 0
+MISO
+Text GLabel 2550 2350 1    50   Input ~ 0
+~CS_LASER
+Text GLabel 2100 2350 1    50   Input ~ 0
+~TMP_LASER
+$Comp
+L Device:EMI_Filter_CLC FL2
+U 1 1 611748F0
+P 1550 2800
+F 0 "FL2" H 1850 2800 50  0000 C CNN
+F 1 "NFL21SP206X1C7D" H 1550 3026 50  0001 C CNN
+F 2 "pepin-footprints:EMI_805" V 1550 2800 50  0001 C CNN
+F 3 "http://www.murata.com/~/media/webrenewal/support/library/catalog/products/emc/emifil/c31e.ashx?la=en-gb" V 1550 2800 50  0001 C CNN
+F 4 "NFL21SP206X1C7D" H 1550 2800 50  0001 C CNN "PartNo"
+	1    1550 2800
+	0    1    -1   0   
+$EndComp
+$Comp
+L power:GND #PWR06
+U 1 1 61175260
+P 1400 2850
+F 0 "#PWR06" H 1400 2600 50  0001 C CNN
+F 1 "GND" H 1405 2677 50  0000 C CNN
+F 2 "" H 1400 2850 50  0001 C CNN
+F 3 "" H 1400 2850 50  0001 C CNN
+	1    1400 2850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3600 3700 1650 3700
+Wire Wire Line
+	1650 3700 1650 3100
+Wire Wire Line
+	1400 2850 1400 2800
+Wire Wire Line
+	1400 2800 1450 2800
+Wire Wire Line
+	1650 2500 1650 2350
+Text GLabel 1650 2350 1    50   Input ~ 0
+~CS_CHARGE
+$Comp
+L pepin_semi:ADC104S021 U1
+U 1 1 6117A088
+P 7050 2850
+F 0 "U1" H 7150 3150 50  0000 C CNN
+F 1 "ADC104S021" H 7300 2550 50  0000 C CNN
+F 2 "Package_SO:VSSOP-10_3x3mm_P0.5mm" H 6650 2850 50  0001 C CNN
+F 3 "" H 6650 2850 50  0001 C CNN
+F 4 "ADC104S021CIMMX/NOPB" H 7050 2850 50  0001 C CNN "PartNo"
+	1    7050 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C2
+U 1 1 6117CBD3
+P 6850 2300
+F 0 "C2" V 6800 2400 50  0000 C CNN
+F 1 ".1uF" V 6900 2400 50  0000 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 6888 2150 50  0001 C CNN
+F 3 "~" H 6850 2300 50  0001 C CNN
+F 4 "C0805X104M5RACTU" H 6850 2300 50  0001 C CNN "PartNo"
+	1    6850 2300
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C C1
+U 1 1 6117DF78
+P 6850 2050
+F 0 "C1" V 6800 2150 50  0000 C CNN
+F 1 "1uF" V 6900 2150 50  0000 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 6888 1900 50  0001 C CNN
+F 3 "~" H 6850 2050 50  0001 C CNN
+F 4 "UMF212B7105KGHT" H 6850 2050 50  0001 C CNN "PartNo"
+	1    6850 2050
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7050 2500 7050 2300
+Wire Wire Line
+	7000 2050 7050 2050
+Connection ~ 7050 2050
+Wire Wire Line
+	7050 2050 7050 1900
+Wire Wire Line
+	7000 2300 7050 2300
+Connection ~ 7050 2300
+Wire Wire Line
+	7050 2300 7050 2050
+$Comp
+L power:+3V3 #PWR029
+U 1 1 61181A20
+P 7050 1900
+F 0 "#PWR029" H 7050 1750 50  0001 C CNN
+F 1 "+3V3" H 7050 2050 50  0000 C CNN
+F 2 "" H 7050 1900 50  0001 C CNN
+F 3 "" H 7050 1900 50  0001 C CNN
+	1    7050 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6700 2050 6650 2050
+Wire Wire Line
+	6650 2050 6650 2300
+Wire Wire Line
+	6650 2300 6700 2300
+Connection ~ 6650 2300
+Wire Wire Line
+	6650 2300 6650 2350
+$Comp
+L power:GND #PWR028
+U 1 1 611883F2
+P 6650 2350
+F 0 "#PWR028" H 6650 2100 50  0001 C CNN
+F 1 "GND" H 6655 2177 50  0000 C CNN
+F 2 "" H 6650 2350 50  0001 C CNN
+F 3 "" H 6650 2350 50  0001 C CNN
+	1    6650 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR030
+U 1 1 61189C5E
+P 7050 3250
+F 0 "#PWR030" H 7050 3000 50  0001 C CNN
+F 1 "GND" H 7055 3077 50  0000 C CNN
+F 2 "" H 7050 3250 50  0001 C CNN
+F 3 "" H 7050 3250 50  0001 C CNN
+	1    7050 3250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7050 3250 7050 3200
+Text GLabel 6600 2700 0    50   Input ~ 0
+~CS_CHARGE
+Text GLabel 6600 2800 0    50   Input ~ 0
+MOSI
+Text GLabel 6600 2900 0    50   Input ~ 0
+MISO
+Text GLabel 6600 3000 0    50   Input ~ 0
+SCK
+$Comp
+L Device:EMI_Filter_CLC FL10
+U 1 1 6118C8FD
+P 5600 2800
+F 0 "FL10" H 5900 2800 50  0000 C CNN
+F 1 "NFL21SP206X1C7D" H 5600 3026 50  0001 C CNN
+F 2 "pepin-footprints:EMI_805" V 5600 2800 50  0001 C CNN
+F 3 "http://www.murata.com/~/media/webrenewal/support/library/catalog/products/emc/emifil/c31e.ashx?la=en-gb" V 5600 2800 50  0001 C CNN
+F 4 "NFL21SP206X1C7D" H 5600 2800 50  0001 C CNN "PartNo"
+	1    5600 2800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4100 3700 5500 3700
+Wire Wire Line
+	5500 3700 5500 3100
+Wire Wire Line
+	5500 2500 5500 2350
+$Comp
+L power:GND #PWR027
+U 1 1 611913AB
+P 5750 2850
+F 0 "#PWR027" H 5750 2600 50  0001 C CNN
+F 1 "GND" H 5755 2677 50  0000 C CNN
+F 2 "" H 5750 2850 50  0001 C CNN
+F 3 "" H 5750 2850 50  0001 C CNN
+	1    5750 2850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5700 2800 5750 2800
+Wire Wire Line
+	5750 2800 5750 2850
+$Sheet
+S 8300 1800 1800 600 
+U 6119A3CA
+F0 "BatteryCharger" 50
+F1 "BatteryCharger.sch" 50
+$EndSheet
+Text GLabel 7450 2700 2    50   Input ~ 0
+~CHARGE
+Text GLabel 7450 2800 2    50   Input ~ 0
+BAT_VOLT
+$Comp
+L Connector_Generic:Conn_01x02 CHG1
+U 1 1 611E7A29
+P 3750 5550
+F 0 "CHG1" H 3830 5496 50  0000 L CNN
+F 1 "105313-1102" H 3830 5451 50  0001 L CNN
+F 2 "Connector_Molex:Molex_Nano-Fit_105313-xx02_1x02_P2.50mm_Horizontal" H 3750 5550 50  0001 C CNN
+F 3 "~" H 3750 5550 50  0001 C CNN
+F 4 "105313-1102" H 3750 5550 50  0001 C CNN "PartNo"
+	1    3750 5550
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR017
+U 1 1 611E8399
+P 3150 5750
+F 0 "#PWR017" H 3150 5500 50  0001 C CNN
+F 1 "GND" H 3155 5577 50  0000 C CNN
+F 2 "" H 3150 5750 50  0001 C CNN
+F 3 "" H 3150 5750 50  0001 C CNN
+	1    3150 5750
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+12V #PWR016
+U 1 1 611E9137
+P 3150 5450
+F 0 "#PWR016" H 3150 5300 50  0001 C CNN
+F 1 "+12V" H 3165 5623 50  0000 C CNN
+F 2 "" H 3150 5450 50  0001 C CNN
+F 3 "" H 3150 5450 50  0001 C CNN
+	1    3150 5450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3150 5450 3150 5550
+Wire Wire Line
+	3550 5650 3150 5650
+Wire Wire Line
+	3150 5650 3150 5750
+$Sheet
+S 8300 2750 1800 500 
+U 611EECB1
+F0 "PowerControl" 50
+F1 "PowerControl.sch" 50
+$EndSheet
+$Comp
+L Device:D_Schottky_ALT D1
+U 1 1 611F5AB0
+P 3350 5550
+F 0 "D1" H 3350 5675 50  0000 C CNN
+F 1 "CDBA540-HF" H 3350 5424 50  0001 C CNN
+F 2 "Diode_SMD:D_SMA" H 3350 5550 50  0001 C CNN
+F 3 "~" H 3350 5550 50  0001 C CNN
+F 4 "CDBA540-HF" H 3350 5550 50  0001 C CNN "PartNo"
+	1    3350 5550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3150 5550 3200 5550
+Wire Wire Line
+	3500 5550 3550 5550
+Text GLabel 7450 2900 2    50   Input ~ 0
+BAT_CURRENT
+Text GLabel 1150 2350 1    50   Input ~ 0
+~INTERLOCK_EN
+$Sheet
+S 8300 3600 1800 700 
+U 61306A09
+F0 "3vPower" 50
+F1 "3vPower.sch" 50
+$EndSheet
+$Comp
+L Connector_Generic:Conn_01x02 FAN1
+U 1 1 6135CC2D
+P 4900 5550
+F 0 "FAN1" H 4980 5496 50  0000 L CNN
+F 1 "53398-0267" H 4980 5451 50  0001 L CNN
+F 2 "ultra-librarian:533980267" H 4900 5550 50  0001 C CNN
+F 3 "~" H 4900 5550 50  0001 C CNN
+F 4 "53398-0267" H 4900 5550 50  0001 C CNN "PartNo"
+	1    4900 5550
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR023
+U 1 1 6135E078
+P 4550 5850
+F 0 "#PWR023" H 4550 5600 50  0001 C CNN
+F 1 "GND" H 4555 5677 50  0000 C CNN
+F 2 "" H 4550 5850 50  0001 C CNN
+F 3 "" H 4550 5850 50  0001 C CNN
+	1    4550 5850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR022
+U 1 1 6135EF59
+P 4550 5200
+F 0 "#PWR022" H 4550 5050 50  0001 C CNN
+F 1 "+5V" H 4565 5373 50  0000 C CNN
+F 2 "" H 4550 5200 50  0001 C CNN
+F 3 "" H 4550 5200 50  0001 C CNN
+	1    4550 5200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4700 5550 4550 5550
+Wire Wire Line
+	4550 5550 4550 5350
+Wire Wire Line
+	4700 5650 4550 5650
+Wire Wire Line
+	4550 5650 4550 5750
+$Comp
+L power:PWR_FLAG #FLG05
+U 1 1 6139B263
+P 2700 1000
+F 0 "#FLG05" H 2700 1075 50  0001 C CNN
+F 1 "PWR_FLAG" H 2700 1173 50  0000 C CNN
+F 2 "" H 2700 1000 50  0001 C CNN
+F 3 "~" H 2700 1000 50  0001 C CNN
+	1    2700 1000
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:+12V #PWR013
+U 1 1 6139D29C
+P 2700 950
+F 0 "#PWR013" H 2700 800 50  0001 C CNN
+F 1 "+12V" H 2715 1123 50  0000 C CNN
+F 2 "" H 2700 950 50  0001 C CNN
+F 3 "" H 2700 950 50  0001 C CNN
+	1    2700 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2700 1000 2700 950 
+NoConn ~ 9500 6000
+NoConn ~ 9700 6000
+NoConn ~ 9700 6450
+NoConn ~ 9500 6450
+$Comp
+L power:PWR_FLAG #FLG02
+U 1 1 613E6E62
+P 1350 1000
+F 0 "#FLG02" H 1350 1075 50  0001 C CNN
+F 1 "PWR_FLAG" H 1350 1173 50  0000 C CNN
+F 2 "" H 1350 1000 50  0001 C CNN
+F 3 "~" H 1350 1000 50  0001 C CNN
+	1    1350 1000
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1350 950  1350 1000
+$Comp
+L power:VDC #PWR03
+U 1 1 613E8DBC
+P 1350 950
+F 0 "#PWR03" H 1350 850 50  0001 C CNN
+F 1 "VDC" H 1365 1123 50  0000 C CNN
+F 2 "" H 1350 950 50  0001 C CNN
+F 3 "" H 1350 950 50  0001 C CNN
+	1    1350 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR015
+U 1 1 60C44357
+P 3150 1000
+F 0 "#PWR015" H 3150 750 50  0001 C CNN
+F 1 "GND" H 3155 827 50  0000 C CNN
+F 2 "" H 3150 1000 50  0001 C CNN
+F 3 "" H 3150 1000 50  0001 C CNN
+	1    3150 1000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3150 1000 3150 950 
+$Comp
+L power:PWR_FLAG #FLG06
+U 1 1 5EDF304F
+P 3150 950
+F 0 "#FLG06" H 3150 1025 50  0001 C CNN
+F 1 "PWR_FLAG" H 3150 1123 50  0000 C CNN
+F 2 "" H 3150 950 50  0001 C CNN
+F 3 "~" H 3150 950 50  0001 C CNN
+	1    3150 950 
+	1    0    0    -1  
+$EndComp
+$Sheet
+S 8300 4600 1800 500 
+U 60CEA322
+F0 "OutputMonitor" 50
+F1 "OutputMonitor.sch" 50
+$EndSheet
+Text GLabel 7450 3000 2    50   Input ~ 0
+LASER_MON
+$Comp
+L Connector_Generic:Conn_01x02 PHOTO1
+U 1 1 60CFF6FF
+P 6000 5550
+F 0 "PHOTO1" H 6080 5496 50  0000 L CNN
+F 1 "53398-0267" H 6080 5451 50  0001 L CNN
+F 2 "ultra-librarian:533980267" H 6000 5550 50  0001 C CNN
+F 3 "~" H 6000 5550 50  0001 C CNN
+F 4 "53398-0267" H 6000 5550 50  0001 C CNN "PartNo"
+	1    6000 5550
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR026
+U 1 1 60CFFCCA
+P 5700 5700
+F 0 "#PWR026" H 5700 5450 50  0001 C CNN
+F 1 "GND" H 5705 5527 50  0000 C CNN
+F 2 "" H 5700 5700 50  0001 C CNN
+F 3 "" H 5700 5700 50  0001 C CNN
+	1    5700 5700
+	1    0    0    -1  
+$EndComp
+Text GLabel 5800 5550 0    50   Input ~ 0
+PHOTODIODE
+Wire Wire Line
+	5800 5650 5700 5650
+Wire Wire Line
+	5700 5650 5700 5700
+$Comp
+L pepin_con:DEANS OUT1
+U 1 1 60D42EF6
+P 2450 5600
+F 0 "OUT1" H 2568 5600 50  0000 L CNN
+F 1 "DEANS" H 2500 5450 50  0001 C CNN
+F 2 "pepin-footprints:Connector_Deans_Female" H 2450 5600 50  0001 C CNN
+F 3 "http://cdn.sparkfun.com/datasheets/Prototyping/deans_connector_PRT-11864.pdf" H 2450 5600 50  0001 C CNN
+	1    2450 5600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2350 5550 2300 5550
+Wire Wire Line
+	2300 5550 2300 5450
+Wire Wire Line
+	2350 5650 2300 5650
+Wire Wire Line
+	2300 5650 2300 5750
+$Comp
+L power:GND #PWR012
+U 1 1 60D42F2A
+P 2300 5750
+F 0 "#PWR012" H 2300 5500 50  0001 C CNN
+F 1 "GND" H 2305 5577 50  0000 C CNN
+F 2 "" H 2300 5750 50  0001 C CNN
+F 3 "" H 2300 5750 50  0001 C CNN
+	1    2300 5750
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:VDC #PWR011
+U 1 1 60D473E3
+P 2300 5450
+F 0 "#PWR011" H 2300 5350 50  0001 C CNN
+F 1 "VDC" H 2315 5623 50  0000 C CNN
+F 2 "" H 2300 5450 50  0001 C CNN
+F 3 "" H 2300 5450 50  0001 C CNN
+	1    2300 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:EMI_Filter_CLC FL1
+U 1 1 613EC6F2
+P 1050 2800
+F 0 "FL1" H 1350 2800 50  0000 C CNN
+F 1 "NFL21SP206X1C7D" H 1050 3026 50  0001 C CNN
+F 2 "pepin-footprints:EMI_805" V 1050 2800 50  0001 C CNN
+F 3 "http://www.murata.com/~/media/webrenewal/support/library/catalog/products/emc/emifil/c31e.ashx?la=en-gb" V 1050 2800 50  0001 C CNN
+F 4 "NFL21SP206X1C7D" H 1050 2800 50  0001 C CNN "PartNo"
+	1    1050 2800
+	0    1    -1   0   
+$EndComp
+$Comp
+L power:GND #PWR02
+U 1 1 613ECFB4
+P 900 2850
+F 0 "#PWR02" H 900 2600 50  0001 C CNN
+F 1 "GND" H 905 2677 50  0000 C CNN
+F 2 "" H 900 2850 50  0001 C CNN
+F 3 "" H 900 2850 50  0001 C CNN
+	1    900  2850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3600 3800 1150 3800
+Wire Wire Line
+	1150 3800 1150 3100
+Wire Wire Line
+	900  2850 900  2800
+Wire Wire Line
+	900  2800 950  2800
+Wire Wire Line
+	1150 2500 1150 2350
+Text GLabel 5500 2350 1    50   Input ~ 0
+~INTERLOCK_SW
+$Comp
+L power:+5V #PWR09
+U 1 1 6116EDD1
+P 2250 950
+F 0 "#PWR09" H 2250 800 50  0001 C CNN
+F 1 "+5V" H 2265 1123 50  0000 C CNN
+F 2 "" H 2250 950 50  0001 C CNN
+F 3 "" H 2250 950 50  0001 C CNN
+	1    2250 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG04
+U 1 1 6116F7B4
+P 2250 1000
+F 0 "#FLG04" H 2250 1075 50  0001 C CNN
+F 1 "PWR_FLAG" H 2250 1173 50  0000 C CNN
+F 2 "" H 2250 1000 50  0001 C CNN
+F 3 "~" H 2250 1000 50  0001 C CNN
+	1    2250 1000
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2250 1000 2250 950 
+$Comp
+L Device:D_Schottky_ALT D2
+U 1 1 61471C7E
+P 4300 5550
+F 0 "D2" V 4300 5630 50  0000 L CNN
+F 1 "V1FM15-M3/H" V 4345 5630 50  0001 L CNN
+F 2 "Diode_SMD:D_SOD-123F" H 4300 5550 50  0001 C CNN
+F 3 "~" H 4300 5550 50  0001 C CNN
+F 4 "V1FM15-M3/H" H 4300 5550 50  0001 C CNN "PartNo"
+	1    4300 5550
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4300 5400 4300 5350
+Wire Wire Line
+	4300 5350 4550 5350
+Connection ~ 4550 5350
+Wire Wire Line
+	4550 5350 4550 5200
+Wire Wire Line
+	4300 5700 4300 5750
+Wire Wire Line
+	4300 5750 4550 5750
+Connection ~ 4550 5750
+Wire Wire Line
+	4550 5750 4550 5850
+Wire Wire Line
+	4600 2350 4600 3300
+Text Notes 1000 6650 0    50   ~ 0
+V4-V5 Change Summary\n\n- Add D20 to charging circuit\n- Remove RV1, Now R55 12k\n- Change R50 to 20.5k\n
+$EndSCHEMATC

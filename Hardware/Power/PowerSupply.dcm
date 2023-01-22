@@ -1,0 +1,32 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP DEANS
+D DEANS CONNECTOR - F
+K 1568-1659-ND
+F http://cdn.sparkfun.com/datasheets/Prototyping/deans_connector_PRT-11864.pdf
+$ENDCMP
+#
+$CMP MAX20096ATJ_VY+
+K LED DRIVER BUCK
+F https://www.maximintegrated.com/en/products/power/led-drivers/MAX20096.html
+$ENDCMP
+#
+$CMP PSMN1R8-30MLHX
+D MOSFET N-CH 30V LOGIC LEVEL IN LFPAK3
+K 1727-PSMN1R8-30MLHXTR-ND
+F https://assets.nexperia.com/documents/data-sheet/PSMN1R8-30MLH.pdf
+$ENDCMP
+#
+$CMP TSW-104-07-F-D
+D CONN HEADER VERT 8POS 2.54MM
+K SAM8996-ND
+F http://suddendocs.samtec.com/catalog_english/tsw_th.pdf
+$ENDCMP
+#
+$CMP TSW-105-14-F-D
+D CONN HEADER VERT 10POS 2.54MM
+K SAM10339-ND
+F http://suddendocs.samtec.com/catalog_english/tsw_th.pdf
+$ENDCMP
+#
+#End Doc Library

@@ -1,0 +1,6 @@
+(fp_lib_table
+  (lib (name digikey-footprints)(type KiCad)(uri /Users/Brian/Documents/KiCad/Libraries/digikey-kicad-library/digikey-footprints.pretty)(options "")(descr ""))
+  (lib (name pepin-footprints)(type KiCad)(uri /Users/Brian/Documents/KiCad/Libraries/pepin-kicad-library/pepin-footprints.pretty)(options "")(descr ""))
+  (lib (name PowerSupplyFootprints)(type KiCad)(uri "/Users/Brian/Documents/KiCad/Projects/Laser 2020/PowerSupply/V3/PowerSupplyFootprints.pretty")(options "")(descr "")(disabled))
+  (lib (name Footprints)(type KiCad)(uri ${KIPRJMOD}/Footprints.pretty)(options "")(descr ""))
+)

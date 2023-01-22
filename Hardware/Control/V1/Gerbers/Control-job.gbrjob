@@ -1,0 +1,165 @@
+{
+  "Header":
+  {
+    "GenerationSoftware":
+    {
+      "Vendor":      "KiCad",
+      "Application": "Pcbnew",
+      "Version":     "(5.1.8-0-10_14)"
+    },
+    "CreationDate":  "2021-12-04T19:42:54-08:00"
+  },
+  "GeneralSpecs":
+  {
+    "ProjectId":
+    {
+      "Name": "Control",
+      "GUID": "436f6e74-726f-46c2-9e6b-696361645f70",
+      "Revision": "rev?"
+    },
+    "Size":
+    {
+      "X": 184.200,
+      "Y": 76.250
+    },
+    "LayerNumber": 4,
+    "BoardThickness":  1.600
+  },
+  "DesignRules":
+  [
+    {
+      "Layers": "Outer",
+      "PadToPad":  0.150,
+      "PadToTrack":  0.150,
+      "TrackToTrack":  0.150,
+      "MinLineWidth":  0.254,
+      "TrackToRegion":  0.508,
+      "RegionToRegion":  0.508
+    },
+    {
+      "Layers": "Inner",
+      "PadToPad":  0.150,
+      "PadToTrack":  0.150,
+      "TrackToTrack":  0.150,
+      "MinLineWidth":  0.381,
+      "TrackToRegion":  0.508,
+      "RegionToRegion":  0.508
+    }
+  ],
+  "FilesAttributes":
+  [
+    {
+      "Path":  "Control-F_Cu.gbr",
+      "FileFunction":  "Copper,L1,Top",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "Control-In1_Cu.gbr",
+      "FileFunction":  "Copper,L2,Inr",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "Control-In2_Cu.gbr",
+      "FileFunction":  "Copper,L3,Inr",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "Control-B_Cu.gbr",
+      "FileFunction":  "Copper,L4,Bot",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "Control-F_Paste.gbr",
+      "FileFunction":  "SolderPaste,Top",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "Control-B_Paste.gbr",
+      "FileFunction":  "SolderPaste,Bot",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "Control-F_SilkS.gbr",
+      "FileFunction":  "Legend,Top",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "Control-B_SilkS.gbr",
+      "FileFunction":  "Legend,Bot",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "Control-F_Mask.gbr",
+      "FileFunction":  "SolderMask,Top",
+      "FilePolarity":  "Negative"
+    },
+    {
+      "Path":  "Control-B_Mask.gbr",
+      "FileFunction":  "SolderMask,Bot",
+      "FilePolarity":  "Negative"
+    },
+    {
+      "Path":  "Control-Edge_Cuts.gbr",
+      "FileFunction":  "Profile",
+      "FilePolarity":  "Positive"
+    }
+  ],
+  "MaterialStackup":
+  [
+    {
+      "Type":  "Legend",
+      "Notes":  "Layer F.SilkS"
+    },
+    {
+      "Type":  "SolderPaste",
+      "Notes":  "Layer F.Paste"
+    },
+    {
+      "Type":  "SolderMask",
+      "Notes":  "Layer F.Mask"
+    },
+    {
+      "Type":  "Copper",
+      "Notes":  "Layer F.Cu"
+    },
+    {
+      "Type":  "Dielectric",
+      "Material":  "FR4",
+      "Notes":  "Layers L1/L2"
+    },
+    {
+      "Type":  "Copper",
+      "Notes":  "Layer In1.Cu"
+    },
+    {
+      "Type":  "Dielectric",
+      "Material":  "FR4",
+      "Notes":  "Layers L2/L3"
+    },
+    {
+      "Type":  "Copper",
+      "Notes":  "Layer In2.Cu"
+    },
+    {
+      "Type":  "Dielectric",
+      "Material":  "FR4",
+      "Notes":  "Layers L3/L4"
+    },
+    {
+      "Type":  "Copper",
+      "Notes":  "Layer B.Cu"
+    },
+    {
+      "Type":  "SolderMask",
+      "Notes":  "Layer B.Mask"
+    },
+    {
+      "Type":  "SolderPaste",
+      "Notes":  "Layer B.Paste"
+    },
+    {
+      "Type":  "Legend",
+      "Notes":  "Layer B.SilkS"
+    }
+  ]
+}

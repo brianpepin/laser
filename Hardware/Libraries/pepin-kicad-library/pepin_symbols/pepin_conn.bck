@@ -1,0 +1,15 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP DEANS
+D DEANS CONNECTOR - F
+K 1568-1659-ND
+F http://cdn.sparkfun.com/datasheets/Prototyping/deans_connector_PRT-11864.pdf
+$ENDCMP
+#
+$CMP TSW-104-07-F-D
+D CONN HEADER VERT 8POS 2.54MM
+K SAM8996-ND
+F http://suddendocs.samtec.com/catalog_english/tsw_th.pdf
+$ENDCMP
+#
+#End Doc Library
