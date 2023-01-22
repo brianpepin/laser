@@ -11,8 +11,13 @@ The repository contains the following directories.
 The Hardware directory contains KiCad files for schematics and board designs for the electronics.  There are three boards in total:
 
 1. The **Power** board is the main power supply. It contains a battery charger, power control, power monitoring, fan controller, and two 50A constant current power supplies.
+![image](Doc/PowerBoard.jpg)
+
 2. The **TEC** board contains four independent channels for controlling thermo-electric coolers. Each channel can control up to 20A of cooling using direct battery voltage.
+![image](Doc/TECBoard.jpg)
+
 3. The **Control** board is a small MCU and display for running the laser.  The board is based on the aging ATMEGA328p....but it would be easy to swap this to a newer MCU.
+![image](Doc/ControlBoard.jpg)
 
 The power and TEC boards must both be bonded to heat sinks on the underside of the board using a non-conductive thermal layer. Boards use Deans connectors for high power and these connectors were modified (pins trimmed) so when soldered the back of the board remains relatively flat.
 
