@@ -4,7 +4,7 @@
 // Reference range TEC board is using
 
 constexpr uint16_t DMAX = 1024;
-constexpr double VREF = 2.5;
+constexpr double ADC_VREF = 2.5;
 constexpr double VCC  = 3.2;
 
 constexpr double ADC_SLOPE =  -38.69341804089662847147074037052;
@@ -25,9 +25,9 @@ static uint16_t convertTemp(float celcius)
 {
     double voltage = celcius * DAC_SLOPE + DAC_OFFSET;
     if (voltage < 0) voltage = 0;
-    if (voltage > VREF) voltage = VREF;
+    if (voltage > ADC_VREF) voltage = ADC_VREF;
 
-    uint16_t value = static_cast<uint16_t>(voltage * DMAX / VREF);
+    uint16_t value = static_cast<uint16_t>(voltage * DMAX / ADC_VREF);
     if (value >= DMAX) value = DMAX - 1;
 
     return value;

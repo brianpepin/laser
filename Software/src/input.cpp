@@ -2,27 +2,18 @@
 #include "globals.h"
 #include "config.h"
 
-#define PIN_HIGH(state, pin) ((state & pin) != 0)
+#define PIN_HIGH(state, pin) ((state & (1 << pin)) != 0)
 
-#define DEBOUNCE_TIME 40
-#define PENDING_RESET_TIME 125
-
-Input::Input() :
-    _gpio(Pins::Gpio::Cs)
+Input::Input()
 {
-    pinMode(Pins::Gpio::Irq, INPUT_PULLUP);
 }
 
 int8_t Input::getEncoderDirection()
 {
-    if (_encoderData.pending && millis() - _encoderData.timestamp > DEBOUNCE_TIME)
-    {
-        _encoderDir += (_encoderData.ccw ? -1 : 1);
-        _encoderData.pending = 0;
-    }
-
+    cli();
     int8_t dir = _encoderDir;
     _encoderDir = 0;
+    sei();
     return dir;
 }
 
@@ -40,12 +31,14 @@ bool Input::getFireSwitch()
 
 bool Input::getInterlockSwitch()
 {
-    return _state.Interlock;
+    //return _state.Interlock;
+    return digitalRead(Pins::Inputs::InterlockEnableHH);
 }
 
 bool Input::getOverTemp()
 {
-    return _state.Temp;
+    //return _state.Temp;
+    return digitalRead(Pins::Inputs::OverTempHH);
 }
 
 void Input::toggleFireSwitch()
@@ -53,94 +46,52 @@ void Input::toggleFireSwitch()
     _state.Fire = !_state.Fire;
 }
 
-void Input::setFireSwitchLed(bool on)
-{
-    uint8_t state = _gpio.getPinState();
-
-    if (on)
-    {
-        state |= Pins::Gpio::Outputs::FireLed;
-    }
-    else
-    {
-        state &= ~Pins::Gpio::Outputs::FireLed;
-    }
-
-    _gpio.setPinState(state);
-}
-
 void Input::reset()
 {
-    // Configure inputs / outputs
+    // Input direction for all input pins
     constexpr static uint8_t inputs =
-        Pins::Gpio::Inputs::EncoderA |
-        Pins::Gpio::Inputs::EncoderB |
-        Pins::Gpio::Inputs::EncoderSel |
-        Pins::Gpio::Inputs::FireMom |
-        Pins::Gpio::Inputs::FireLatch |
-        Pins::Gpio::Inputs::InterlockEnable |
-        Pins::Gpio::Inputs::OverTemp;
+        1 << Pins::Inputs::EncoderA |
+        1 << Pins::Inputs::EncoderB |
+        1 << Pins::Inputs::EncoderSel |
+        1 << Pins::Inputs::Fire |
+        1 << Pins::Inputs::InterlockEnable |
+        1 << Pins::Inputs::OverTemp;
 
-    constexpr static uint8_t outputs =
-        Pins::Gpio::Outputs::FireLed;
+    constexpr static uint8_t pullups = 
+        1 << Pins::Inputs::InterlockEnable |
+        1 << Pins::Inputs::OverTemp;
 
-    _gpio.setDirection(inputs);
+    Pins::Inputs::Port.DIR = ~inputs;
 
-    // These are directly tied to our IO bus. Use a pullup to ensure
-    // they don't float if the bus isn't connected. The encoder switches
-    // do not go through the debounce chip because it is too slow, so
-    // these need pullups too.
+    // Configure inputs as follows: invert polarity and configure
+    // the interrupt on the leading edge.
+    Pins::Inputs::Port.PINCONFIG = PORT_INVEN_bm | PORT_ISC_RISING_gc;
+    Pins::Inputs::Port.PINCTRLUPD = inputs;
 
-    _gpio.setPullups(Pins::Gpio::Inputs::InterlockEnable |
-                     Pins::Gpio::Inputs::OverTemp |
-                     Pins::Gpio::Inputs::EncoderA |
-                     Pins::Gpio::Inputs::EncoderB);
+    // Pins that are not using hardware debounce need to be marked as pullups.
+    Pins::Inputs::Port.PINCONFIG = PORT_PULLUPEN_bm;
+    Pins::Inputs::Port.PINCTRLSET = pullups;
 
-    // All inputs are active low. Invert the results to make
-    // checking simpler.
+    // Clear all interrupts.
+    Pins::Inputs::Port.INTFLAGS = 0xff;
 
-    _gpio.invertPolarity(inputs);
+    uint8_t initialState = (Pins::Inputs::Port.IN & inputs);
 
-    // Enable input filtering in everything but the interlock. If
-    // it bounces we want to know.
-
-    _gpio.enableInputFilter(~Pins::Gpio::Inputs::InterlockEnable);
-
-    // Note: no input pullups are needed because buttons are sent
-    // through a debounce chip, and it provides its own pullups and
-    // provides a clean signal.
-
-    _gpio.setInterrupts(inputs);
-
-    // Falling / rising edges are based no physical signals and
-    // do not change for pins with inverted polarity, so a press
-    // down is a falling edge, and a release is a rising edge.
-
-    uint8_t fallingEdgeInterrupts = inputs;
-    uint8_t risingEdgeInterrupts =
-        Pins::Gpio::Inputs::FireMom |
-        Pins::Gpio::Inputs::InterlockEnable |
-        Pins::Gpio::Inputs::OverTemp;
-
-    _gpio.setRisingEdgeInterrupts(risingEdgeInterrupts);
-    _gpio.setFallingEdgeInterrupts(fallingEdgeInterrupts);
-
-    uint8_t initialState = _gpio.getPinState();
-    initialState &= ~outputs;
-    _gpio.setPinState(initialState);
-
-    _state.Interlock = PIN_HIGH(initialState, Pins::Gpio::Inputs::InterlockEnable);
-    _state.Temp = PIN_HIGH(initialState, Pins::Gpio::Inputs::OverTemp);
+    _state.Interlock = PIN_HIGH(initialState, Pins::Inputs::InterlockEnable);
+    _state.Temp = PIN_HIGH(initialState, Pins::Inputs::OverTemp);
     _state.Select = false;
     _state.Fire = false;
     _encoderDir = 0;
-    _encoderData.pending = 0;
+
+    // Hardware hacks
+    pinMode(Pins::Inputs::InterlockEnableHH, INPUT_PULLUP);
+    pinMode(Pins::Inputs::OverTempHH, INPUT_PULLUP);
 }
 
 void Input::processInterrupt()
 {
-    uint8_t interruptState = _gpio.getInterruptState();
-    uint8_t pinState = _gpio.getPinState();
+    uint8_t interruptState = Pins::Inputs::Port.INTFLAGS;
+    uint8_t pinState = Pins::Inputs::Port.IN;
 
     if (interruptState == 0)
     {
@@ -148,52 +99,21 @@ void Input::processInterrupt()
         return;
     }
 
-    // Calculate new encoder position. Quadature encoding has
-    // a specific pattern of A and B that changes based on 
-    // the turn direction. The interrupt on the GPIO chip
-    // is programmed to only fire on falling transitions,
-    // so we can filter out transitions to ignore easily.
-
-    constexpr static auto ab = Pins::Gpio::Inputs::EncoderA | Pins::Gpio::Inputs::EncoderB;
-
-    // Encoder does not flow through our debounce hardware
-    // because it is too slow (80ms debounce time for both 
-    // open and close). So do a simple debounce in software
-    // here by recording the timestamp of the encoder data.
-    // If we see another pending entry that is faster than
-    // our debounce time we can throw it away.
-
-    if ((interruptState & ab) != 0)
+    // For the encoder position: check the pin that changed
+    // and if the other pin is high, we have a confirmed change
+    
+    if (PIN_HIGH(interruptState, Pins::Inputs::EncoderA))
     {
-        uint32_t timestamp = millis();
-
-        // Throw away pending data if we are past our pending reset time
-        if (timestamp - _encoderData.timestamp > PENDING_RESET_TIME)
+        if (PIN_HIGH(pinState, Pins::Inputs::EncoderB))
         {
-            _encoderData.pending = 0;
+            _encoderDir++;
         }
-
-        if (!_encoderData.pending || timestamp - _encoderData.timestamp > DEBOUNCE_TIME)
+    }
+    else if (PIN_HIGH(interruptState, Pins::Inputs::EncoderB))
+    {
+        if (PIN_HIGH(pinState, Pins::Inputs::EncoderA))
         {
-            if (_encoderData.pending)
-            {
-                _encoderDir += (_encoderData.ccw ? -1 : 1);
-                _encoderData.pending = 0;
-            }
-
-            uint8_t encoderState = pinState & ab;
-            if (encoderState == Pins::Gpio::Inputs::EncoderA)
-            {
-                _encoderData.ccw = true;
-                _encoderData.pending = true;
-            }
-            else if (encoderState == Pins::Gpio::Inputs::EncoderB)
-            {
-                _encoderData.ccw = false;
-                _encoderData.pending = true;
-            }
-
-            _encoderData.timestamp = timestamp;
+            _encoderDir--;
         }
     }
 
@@ -201,16 +121,15 @@ void Input::processInterrupt()
     // use the interrupt state.  Changes that depend on a switch remaining
     // closed use pinState.
 
-    _state.Select = PIN_HIGH(interruptState, Pins::Gpio::Inputs::EncoderSel);
-    _state.Interlock = PIN_HIGH(pinState, Pins::Gpio::Inputs::InterlockEnable);
-    _state.Temp = PIN_HIGH(pinState, Pins::Gpio::Inputs::OverTemp);
+    _state.Select = PIN_HIGH(interruptState, Pins::Inputs::EncoderSel);
+    _state.Interlock = PIN_HIGH(pinState, Pins::Inputs::InterlockEnable);
+    _state.Temp = PIN_HIGH(pinState, Pins::Inputs::OverTemp);
 
-    if (PIN_HIGH(interruptState, Pins::Gpio::Inputs::FireLatch))
+    if (PIN_HIGH(interruptState, Pins::Inputs::Fire))
     {
         _state.Fire = !_state.Fire;
     }
-    else if (PIN_HIGH(interruptState, Pins::Gpio::Inputs::FireMom))
-    {
-        _state.Fire = PIN_HIGH(pinState, Pins::Gpio::Inputs::FireMom);
-    }
+
+    // Clear the interrupt state
+    Pins::Inputs::Port.INTFLAGS = 0xff;
 }

@@ -5,6 +5,8 @@ class Led
 public:
     Led();
 
+    void begin();
+
     void setFiring(bool firing);
     void setCharging(bool charging);
     void setInterlock(bool interlock);

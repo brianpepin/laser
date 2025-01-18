@@ -1,7 +1,5 @@
 #pragma once
 
-#include <XRA1402.h>
-
 //
 // Input works as follows:  Inputs that are momentary in
 // nature will return a value when the input changes. Inputs
@@ -22,13 +20,10 @@ public:
 
     void toggleFireSwitch();
 
-    void setFireSwitchLed(bool on);
-
     void reset();
     void processInterrupt();
 
 private:
-    XRA1402 _gpio;
 
     struct State
     {
@@ -37,16 +32,7 @@ private:
         uint8_t Fire        : 1;
         uint8_t Temp        : 1;
     };
-
-    struct EncoderData
-    {
-        uint8_t pending : 1;
-        uint8_t ccw : 1;
-        uint8_t unused : 6;
-        uint32_t timestamp;
-    };
     
     volatile State _state;
     volatile int8_t _encoderDir;
-    volatile EncoderData _encoderData;
 };

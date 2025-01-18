@@ -12,6 +12,10 @@ Led::Led() :
     _tickMillis(0),
     _value(0)
 {
+}
+
+void Led::begin()
+{
     uint8_t pins[] =
     {
         Pins::Led::Red,
@@ -24,6 +28,12 @@ Led::Led() :
         pinMode(pins[i], OUTPUT);
         analogWrite(pins[i], 0);
     }
+
+    // Main button LED
+    pinMode(Pins::Led::Fire, OUTPUT);
+    pinMode(Pins::Led::Ready, OUTPUT);
+    digitalWrite(Pins::Led::Fire, LOW);
+    digitalWrite(Pins::Led::Ready, LOW);
 }
 
 void Led::setFiring(bool firing)
@@ -73,10 +83,7 @@ void Led::setCriticalBattery(bool battery)
 
 void Led::tick()
 {
-    int8_t on[3]{0};
-    bool fireLed = false;
-
-    fireLed = _state.firing;
+    int8_t on[5]{0};
 
     if (_state.battery && !_state.charging && _state.interlock)
     {
@@ -97,7 +104,7 @@ void Led::tick()
     }
     else if (_state.firing)
     {
-        on[0] = 1;
+        on[4] = 1;
         _value = 120;
         _tickMillis = 0;
     }
@@ -124,9 +131,9 @@ void Led::tick()
     else if (_state.interlock)
     {
         // ready state.
-        on[1] = 1;
+        on[3] = 1;
         _value = 50;
-        _tickMillis = 0;    
+        _tickMillis = 0;
     }
     else
     {
@@ -138,5 +145,6 @@ void Led::tick()
     analogWrite(Pins::Led::Red,   on[0] * _value);
     analogWrite(Pins::Led::Green, on[1] * _value);
     analogWrite(Pins::Led::Blue,  on[2] * _value);
-    input.setFireSwitchLed(fireLed);
+    analogWrite(Pins::Led::Ready, on[3] * _value);
+    analogWrite(Pins::Led::Fire,  on[4] * _value);
 }

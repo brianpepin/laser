@@ -4,65 +4,62 @@ namespace Pins
 {
     namespace Spi
     {
-        constexpr static uint8_t Mosi   = 11;
-        constexpr static uint8_t Miso   = 12;
-        constexpr static uint8_t Sck    = 13;
-        constexpr static uint8_t Ss     = 10;
+        constexpr static uint8_t Mosi   = PIN_SPI_MOSI;
+        constexpr static uint8_t Miso   = PIN_SPI_MISO;
+        constexpr static uint8_t Sck    = PIN_SPI_SCK;
+        constexpr static uint8_t Ss     = PIN_SPI_SS;
     }
 
-    namespace Gpio
+    namespace Inputs
     {
-        constexpr static uint8_t Cs     = 2;        // PD2
-        constexpr static uint8_t Irq    = PCINT23;  // PD7
+        // All inputs are interrupt driven and must be on the
+        // same port.
+        constexpr static uint8_t EncoderA           = PIN3;
+        constexpr static uint8_t EncoderB           = PIN2;
+        constexpr static uint8_t EncoderSel         = PIN0;
+        constexpr static uint8_t Fire               = PIN1;
+        constexpr static uint8_t InterlockEnable    = PIN4;
+        constexpr static uint8_t OverTemp           = PIN5;
+        static PORT_t&           Port               = PORTD;
 
-        // GPIO expander port numbers
-        namespace Inputs
-        {
-            constexpr static uint8_t EncoderA           = 0x01;
-            constexpr static uint8_t EncoderB           = 0x02;
-            constexpr static uint8_t EncoderSel         = 0x04;
-            constexpr static uint8_t FireMom            = 0x08;
-            constexpr static uint8_t FireLatch          = 0x10;
-            constexpr static uint8_t InterlockEnable    = 0x20;
-            constexpr static uint8_t OverTemp           = 0x40;
-        }
-
-        namespace Outputs
-        {
-            constexpr static uint8_t FireLed            = 0x80;
-        }
+        // Hardware hacks -- PC board has these pins assigned wrong
+        constexpr static uint8_t InterlockEnableHH  = PIN_PB7;
+        constexpr static uint8_t OverTempHH         = PIN_PB2;
     }
 
     namespace Tec
     {
-        constexpr static uint8_t CsRead = 8;  // PB0
-        constexpr static uint8_t CsSet  = 9;  // PB1
-        constexpr static uint8_t Enable = A5; // PC5
+        constexpr static uint8_t CsRead = PIN_PB4;
+        constexpr static uint8_t CsSet  = PIN_PB3;
+        constexpr static uint8_t Enable = PIN_PB5;
     }
 
     namespace Laser
     {
-        constexpr static uint8_t Cs     = A0; // PC0
-        constexpr static uint8_t Reset  = A1; // PC1
+        constexpr static uint8_t Cs     = PIN_PB0;
+        constexpr static uint8_t Reset  = PIN_PB1;
     }
 
     namespace Power
     {
-        constexpr static uint8_t Cs     = 4;  // PD4
+        constexpr static uint8_t Cs     = PIN_PB6;
     }
 
     namespace Led
     {
-        constexpr static uint8_t Red    = 3; // PD3
-        constexpr static uint8_t Green  = 5; // PD5
-        constexpr static uint8_t Blue   = 6; // PD6
+        constexpr static uint8_t Red    = PIN_PC2;
+        constexpr static uint8_t Green  = PIN_PC1;
+        constexpr static uint8_t Blue   = PIN_PC0;
+
+        constexpr static uint8_t Fire   = PIN_PC3;
+        constexpr static uint8_t Ready  = PIN_PC4;
     }
 
     namespace Display
     {
-        constexpr static uint8_t Cs     = A2; // PC2
-        constexpr static uint8_t Dc     = A3; // PC3
-        constexpr static uint8_t Reset  = A4; // PC4
+        constexpr static uint8_t Cs     = PIN_PE0;
+        constexpr static uint8_t Dc     = PIN_PE2;
+        constexpr static uint8_t Reset  = PIN_PE1;
     }
 }
 

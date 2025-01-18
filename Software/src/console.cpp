@@ -3,7 +3,6 @@
 #include "console.h"
 
 // todo diag
-#include "XRA1402.h"
 #include "ADC104S021.h"
 #include "config.h"
 #include "power.h"

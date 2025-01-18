@@ -20,7 +20,7 @@ Tec tec;
 //
 // Inputs are handled by a pin change interrupt.
 //
-ISR(PCINT2_vect)
+ISR(PORTD_PORT_vect)
 {
   input.processInterrupt();
 }
@@ -33,6 +33,15 @@ void setup()
   Serial.println(F("\nController starting up..."));
 
   //
+  // Configure LEDs. LEDs are currently configured all on port C
+  // but PWM off timer A does not route there. Change the routing to
+  // enable PWM on port C before starting LEDs.
+  //
+
+  PORTMUX_TCAROUTEA = PORTMUX_TCA0_PORTC_gc;
+  led.begin();
+
+  //
   // Configure SPI port
   //
 
@@ -41,7 +50,6 @@ void setup()
   pinMode(Pins::Spi::Mosi, OUTPUT);
   pinMode(Pins::Spi::Sck, OUTPUT);
   digitalWrite(Pins::Spi::Ss, HIGH);
-  SPI.usingInterrupt(255);
 
   //
   // Configure display
@@ -55,14 +63,6 @@ void setup()
   display.clear();
 
   //
-  // Configure a pin change interrupt for 
-  // our buttons
-  //
-
-  PCICR |= (1 << PCIE2); // Enable pin change interrupt 2 (D pins)
-  PCMSK2 |= (1 << Pins::Gpio::Irq);
-
-  //
   // Read settings from EEPROM and configure
   // power and TEC boards.
   //
@@ -71,12 +71,6 @@ void setup()
 
   laser.reset();
   input.reset();
-
-  //
-  // Now enable interrupts to start processing input.
-  //
-
-  sei();
 
   Serial.println(F("Ready."));
 }
