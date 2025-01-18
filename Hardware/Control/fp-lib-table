@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name pepin-footprints)(type KiCad)(uri /Users/Brian/Documents/KiCad/Libraries/pepin-kicad-library/pepin-footprints.pretty)(options "")(descr ""))
+  (lib (name Components)(type KiCad)(uri ${KIPRJMOD}/Components.pretty)(options "")(descr ""))
+)
