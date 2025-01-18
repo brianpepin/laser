@@ -1,0 +1,9 @@
+(sym_lib_table
+  (lib (name dk_LED-Indication-Discrete)(type Legacy)(uri /Users/Brian/Documents/KiCad/Libraries/digikey-kicad-library/digikey-symbols/dk_LED-Indication-Discrete.lib)(options "")(descr ""))
+  (lib (name dk_Sensors-Transducers_Accessories)(type Legacy)(uri /Users/Brian/Documents/KiCad/Libraries/digikey-kicad-library/digikey-symbols/dk_Sensors-Transducers_Accessories.lib)(options "")(descr ""))
+  (lib (name dk_Display-Modules-LCD-OLED-Graphic)(type Legacy)(uri /Users/Brian/Documents/KiCad/Libraries/digikey-kicad-library/digikey-symbols/dk_Display-Modules-LCD-OLED-Graphic.lib)(options "")(descr ""))
+  (lib (name Components)(type Legacy)(uri ${KIPRJMOD}/Components.lib)(options "")(descr ""))
+  (lib (name pepin_con)(type Legacy)(uri /Users/Brian/Documents/KiCad/Libraries/pepin-kicad-library/pepin_symbols/pepin_con.lib)(options "")(descr ""))
+  (lib (name lpm-eagle-import)(type Legacy)(uri "/Users/Brian/Documents/KiCad/Projects/LPM 2/lpm-eagle-import.lib")(options "")(descr ""))
+  (lib (name USB4085-GF-A_REVA4)(type Legacy)(uri /Users/Brian/Downloads/USB4085-GF-A_REVA4/USB4085-GF-A_REVA4.lib)(options "")(descr "")(disabled))
+)
