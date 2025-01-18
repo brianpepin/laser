@@ -18,31 +18,27 @@ namespace Pins
         constexpr static uint8_t EncoderB           = PIN2;
         constexpr static uint8_t EncoderSel         = PIN0;
         constexpr static uint8_t Fire               = PIN1;
-        constexpr static uint8_t InterlockEnable    = PIN4;
-        constexpr static uint8_t OverTemp           = PIN5;
+        constexpr static uint8_t InterlockEnable    = PIN5;
+        constexpr static uint8_t OverTemp           = PIN4;
         static PORT_t&           Port               = PORTD;
-
-        // Hardware hacks -- PC board has these pins assigned wrong
-        constexpr static uint8_t InterlockEnableHH  = PIN_PB7;
-        constexpr static uint8_t OverTempHH         = PIN_PB2;
     }
 
     namespace Tec
     {
-        constexpr static uint8_t CsRead = PIN_PB4;
-        constexpr static uint8_t CsSet  = PIN_PB3;
-        constexpr static uint8_t Enable = PIN_PB5;
+        constexpr static uint8_t CsRead = PIN_PB3;
+        constexpr static uint8_t CsSet  = PIN_PB2;
+        constexpr static uint8_t Enable = PIN_PB4;
     }
 
     namespace Laser
     {
-        constexpr static uint8_t Cs     = PIN_PB0;
-        constexpr static uint8_t Reset  = PIN_PB1;
+        constexpr static uint8_t Cs     = PIN_PB1;
+        constexpr static uint8_t Reset  = PIN_PB0;
     }
 
     namespace Power
     {
-        constexpr static uint8_t Cs     = PIN_PB6;
+        constexpr static uint8_t Cs     = PIN_PB5;
     }
 
     namespace Led

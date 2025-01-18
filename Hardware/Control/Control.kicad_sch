@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "Laser Control Board")
-		(date "2024-03-30")
-		(rev "2.0")
+		(date "2024-12-01")
+		(rev "2.1")
 		(company "Brian Pepin")
 	)
 	(lib_symbols
@@ -1009,7 +1009,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" " ~"
+			(property "Datasheet" "~"
 				(at 3.81 -1.27 0)
 				(effects
 					(font
@@ -5530,7 +5530,7 @@
 		(uuid "5e05b2ed-26da-40fa-8452-eb67de689cf3")
 	)
 	(no_connect
-		(at 76.2 171.45)
+		(at 76.2 130.81)
 		(uuid "5ff728ab-cabf-446b-ac40-a94696815a3c")
 	)
 	(no_connect
@@ -5590,7 +5590,7 @@
 		(uuid "cfefde2f-f87f-4506-a633-ecc640201454")
 	)
 	(no_connect
-		(at 76.2 168.91)
+		(at 76.2 128.27)
 		(uuid "d8c255e3-05b9-41d5-a63f-2ea3a2b7b3c8")
 	)
 	(no_connect
@@ -6925,7 +6925,7 @@
 	)
 	(wire
 		(pts
-			(xy 76.2 118.11) (xy 80.01 118.11)
+			(xy 76.2 168.91) (xy 80.01 168.91)
 		)
 		(stroke
 			(width 0)
@@ -7355,7 +7355,7 @@
 	)
 	(wire
 		(pts
-			(xy 76.2 130.81) (xy 80.01 130.81)
+			(xy 76.2 171.45) (xy 80.01 171.45)
 		)
 		(stroke
 			(width 0)
@@ -7375,7 +7375,7 @@
 	)
 	(wire
 		(pts
-			(xy 76.2 128.27) (xy 80.01 128.27)
+			(xy 76.2 118.11) (xy 80.01 118.11)
 		)
 		(stroke
 			(width 0)
@@ -7933,7 +7933,7 @@
 	)
 	(global_label "TMP_LASER"
 		(shape input)
-		(at 80.01 118.11 0)
+		(at 80.01 168.91 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7943,7 +7943,7 @@
 		)
 		(uuid "14094ad2-b562-4efa-8c6f-51d7a3134345")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 92.7428 118.11 0)
+			(at 92.7428 168.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8109,7 +8109,7 @@
 	)
 	(global_label "INTERLOCK_EN"
 		(shape input)
-		(at 80.01 130.81 0)
+		(at 80.01 171.45 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8119,7 +8119,7 @@
 		)
 		(uuid "3326423d-8df7-4a7e-a354-349430b8fbd7")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 96.0086 130.81 0)
+			(at 96.0086 171.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8219,7 +8219,7 @@
 	)
 	(global_label "RST_LASER"
 		(shape input)
-		(at 80.01 115.57 0)
+		(at 80.01 113.03 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8229,7 +8229,7 @@
 		)
 		(uuid "47b33eca-4c86-4276-bba6-f371d33e5439")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 92.5009 115.57 0)
+			(at 92.5009 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8351,7 +8351,7 @@
 	)
 	(global_label "CS_TEC_SET"
 		(shape input)
-		(at 80.01 120.65 0)
+		(at 80.01 118.11 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8361,7 +8361,7 @@
 		)
 		(uuid "52aa1dbb-9f3b-4787-8d71-d90874e5bd74")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 93.4684 120.65 0)
+			(at 93.4684 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8549,7 +8549,7 @@
 	)
 	(global_label "CS_CHARGE"
 		(shape input)
-		(at 80.01 128.27 0)
+		(at 80.01 125.73 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8559,7 +8559,7 @@
 		)
 		(uuid "72168a3a-8ccc-4af2-bf6c-b1595602a563")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 93.1662 128.27 0)
+			(at 93.1662 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8747,7 +8747,7 @@
 	)
 	(global_label "CS_LASER"
 		(shape input)
-		(at 80.01 113.03 0)
+		(at 80.01 115.57 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8757,7 +8757,7 @@
 		)
 		(uuid "a8e9efe6-7614-405a-a160-e50c201e0bb4")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 91.5333 113.03 0)
+			(at 91.5333 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9077,7 +9077,7 @@
 	)
 	(global_label "CS_TEC_READ"
 		(shape input)
-		(at 80.01 123.19 0)
+		(at 80.01 120.65 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -9087,7 +9087,7 @@
 		)
 		(uuid "e3e80d5f-deae-4676-bbe0-e0dcad0fde74")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 94.9199 123.19 0)
+			(at 94.9199 120.65 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9208,7 +9208,7 @@
 	)
 	(global_label "TEC_ENABLE"
 		(shape input)
-		(at 80.01 125.73 0)
+		(at 80.01 123.19 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -9218,7 +9218,7 @@
 		)
 		(uuid "f8c67085-7208-4aad-8dbf-9a5b484cc989")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 93.7104 125.73 0)
+			(at 93.7104 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10918,7 +10918,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" " ~"
+		(property "Datasheet" "~"
 			(at 151.13 152.4 0)
 			(effects
 				(font
@@ -10927,7 +10927,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "USB Type A connector"
 			(at 154.94 151.13 0)
 			(effects
 				(font

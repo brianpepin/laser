@@ -31,14 +31,12 @@ bool Input::getFireSwitch()
 
 bool Input::getInterlockSwitch()
 {
-    //return _state.Interlock;
-    return digitalRead(Pins::Inputs::InterlockEnableHH);
+    return _state.Interlock;
 }
 
 bool Input::getOverTemp()
 {
-    //return _state.Temp;
-    return digitalRead(Pins::Inputs::OverTempHH);
+    return _state.Temp;
 }
 
 void Input::toggleFireSwitch()
@@ -82,10 +80,6 @@ void Input::reset()
     _state.Select = false;
     _state.Fire = false;
     _encoderDir = 0;
-
-    // Hardware hacks
-    pinMode(Pins::Inputs::InterlockEnableHH, INPUT_PULLUP);
-    pinMode(Pins::Inputs::OverTempHH, INPUT_PULLUP);
 }
 
 void Input::processInterrupt()
