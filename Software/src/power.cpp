@@ -46,3 +46,23 @@ float Power::getLaserOutputPower()
     adcValue /= _averageCount;
     return Calibration::LaserMonitor::Offset + (Calibration::LaserMonitor::Slope * adcValue);
 }
+
+/*
+
+p = m * adc + b
+
+Given: p0, adc0, p1, adc1
+
+p0 = m * adc0 + b
+p1 = m * adc1 + b
+
+m = p0 / adc0 - b
+b = p1 - m * adc1
+
+m = p0 / adc0 - (p1 - m * adc1)
+
+m = p0 / adc0 - p1 + m * adc1
+m * (1 - adc1) = p0 / adc0 - p1
+m = (p0 / adc0 - p1) / (1 - adc1)
+
+*/
