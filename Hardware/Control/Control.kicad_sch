@@ -8593,7 +8593,7 @@
 	)
 	(global_label "LED_R"
 		(shape input)
-		(at 80.01 140.97 0)
+		(at 80.01 135.89 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8603,7 +8603,7 @@
 		)
 		(uuid "8508a6f2-5ac7-4568-b6a2-f3f589536883")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 88.0257 140.97 0)
+			(at 88.0257 135.89 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8791,7 +8791,7 @@
 	)
 	(global_label "LED_B"
 		(shape input)
-		(at 80.01 135.89 0)
+		(at 80.01 140.97 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8801,7 +8801,7 @@
 		)
 		(uuid "ac0882a4-81ec-4387-90ea-4de2c04a6f60")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 88.0257 135.89 0)
+			(at 88.0257 140.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)
