@@ -7865,6 +7865,36 @@
 		)
 		(uuid "df2d2f65-fba7-4547-82e8-12e4b9a90627")
 	)
+	(label "VBUS"
+		(at 142.24 146.05 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3717af2d-4459-4e77-8497-3368a7c5eef8")
+	)
+	(label "D-"
+		(at 142.24 153.67 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "453c3494-1010-43a0-b68f-0f0a4ef4e056")
+	)
+	(label "D+"
+		(at 142.24 151.13 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "dae3ca1e-1f40-4ddf-9458-155079dd57a8")
+	)
 	(global_label "INTERLOCK_SW"
 		(shape input)
 		(at 218.44 149.86 0)
