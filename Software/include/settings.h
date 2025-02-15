@@ -22,6 +22,17 @@ struct Settings
         float ktp;
     } temps;
 
+    struct Calibration
+    {
+        struct Point
+        {
+            uint16_t adc;
+            float value;
+        };
+
+        Point power;
+    } calibration;
+
     float current;
     DisplayMode displayMode;
 

@@ -15,28 +15,36 @@ void Power::tick()
     _nextPowerAverage = (_nextPowerAverage + 1) % _averageCount;
 }
 
-float Power::getBatteryVoltage()
+void Power::setSimulation(const Status* simulatedStatus)
 {
-    int16_t adcValue = _adc.readValue(1);
-    return Calibration::Battery::Voltage::Offset + (Calibration::Battery::Voltage::Slope * adcValue);
+    _simulatedStatus = simulatedStatus;
 }
 
-float Power::getBatteryCurrent()
+Power::Status Power::getStatus()
 {
-    int16_t adcValue = _adc.readValue(2);
-    return Calibration::Battery::Current::Offset + (Calibration::Battery::Current::Slope * adcValue);
-}
+    if (_simulatedStatus != nullptr)
+    {
+        return *_simulatedStatus;
+    }
 
-bool Power::isBatteryCharging()
-{
+    Status status{};
+    uint16_t adcValue;
+
+    adcValue = _adc.readValue(1);
+    status.adc.batteryVoltage = adcValue;
+    status.batteryVoltage = Calibration::Battery::Voltage::Offset + (Calibration::Battery::Voltage::Slope * adcValue);
+
+    adcValue = _adc.readValue(2);
+    status.adc.batteryCurrent = adcValue;
+    status.batteryCurrent = Calibration::Battery::Current::Offset + (Calibration::Battery::Current::Slope * adcValue);
+
     // Charge state is a logic low when charging and this is routed to an ADC channel
-    uint16_t adcValue = _adc.readValue(0);
-    return adcValue < _adc.max / 2;
-}
+    adcValue = _adc.readValue(0);
+    status.adc.batteryCharging = adcValue;
+    status.batteryCharging = adcValue < _adc.max / 2;
 
-float Power::getLaserOutputPower()
-{
-    int32_t adcValue = 0;
+    // Laser Output Power
+    adcValue = 0;
 
     for (uint8_t idx = 0; idx < _averageCount; idx++)
     {
@@ -44,25 +52,19 @@ float Power::getLaserOutputPower()
     }
 
     adcValue /= _averageCount;
-    return Calibration::LaserMonitor::Offset + (Calibration::LaserMonitor::Slope * adcValue);
+    status.adc.laserOutputPower = static_cast<uint16_t>(adcValue);
+
+    // For output power calibration we store a power
+    // and ADC value and assume p=0 when adc=0;
+
+    if (adcValue != 0)
+    {
+        float cp = settings.calibration.power.value;
+        float cadc = settings.calibration.power.adc;
+        float slope = cp / cadc;
+        status.laserOutputPower = slope * adcValue;
+    }
+
+    return status;
 }
 
-/*
-
-p = m * adc + b
-
-Given: p0, adc0, p1, adc1
-
-p0 = m * adc0 + b
-p1 = m * adc1 + b
-
-m = p0 / adc0 - b
-b = p1 - m * adc1
-
-m = p0 / adc0 - (p1 - m * adc1)
-
-m = p0 / adc0 - p1 + m * adc1
-m * (1 - adc1) = p0 / adc0 - p1
-m = (p0 / adc0 - p1) / (1 - adc1)
-
-*/

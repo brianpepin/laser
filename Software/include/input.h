@@ -10,9 +10,11 @@
 class Input
 {
 public:
+
     Input();
 
     int8_t getEncoderDirection();
+    uint8_t getEncoderVelocity();
     bool getEncoderSelect();
     bool getFireSwitch();
     bool getInterlockSwitch();
@@ -32,7 +34,11 @@ private:
         uint8_t Fire        : 1;
         uint8_t Temp        : 1;
     };
+
+    constexpr static size_t c_encoderMillisCount = 6;
     
     volatile State _state;
     volatile int8_t _encoderDir;
+    volatile uint16_t _encoderMillis[c_encoderMillisCount];
+
 };

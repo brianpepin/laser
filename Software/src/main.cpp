@@ -58,7 +58,7 @@ void setup()
   pinMode(Pins::Display::Cs, OUTPUT);
   pinMode(Pins::Display::Reset, OUTPUT);
   pinMode(Pins::Display::Dc, OUTPUT);
-  display.setBusClock(10000000);
+  display.setBusClock(8000000);
   display.begin();
   display.clear();
 

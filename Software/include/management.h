@@ -2,6 +2,7 @@
 
 #include "laser.h"
 #include "tec.h"
+#include "power.h"
 #include "view.h"
 
 enum class ViewId
@@ -11,19 +12,12 @@ enum class ViewId
     Menu
 };
 
-struct BatteryStatus
-{
-    float voltage;
-    bool charging;
-};
-
 struct SystemStatus
 {
     bool ok;
     Laser::Status laser;
     Tec::Status tec;
-    BatteryStatus battery;
-    float outputPower;
+    Power::Status power;
 };
 
 namespace Management
@@ -46,6 +40,16 @@ namespace Management
     // other system problem.
     //
     void enable(bool enable, bool force = false);
+
+    //
+    // Used during debugging to set parameters of the status.
+    // Calling this with a non-null status will enter simulation
+    // mode for this and all subsystems. In simulation mode, laser
+    // power output tracks input requests. Calling this with null
+    // ends the simulation. To change simulation values call
+    // setSimulation again.
+    //
+    void setSimulation(const SystemStatus* simulatedStatus);
 
     //
     // If enabled, this will perform a restart cycle.
