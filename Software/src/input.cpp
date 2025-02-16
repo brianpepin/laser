@@ -17,6 +17,46 @@ int8_t Input::getEncoderDirection()
     return dir;
 }
 
+uint8_t Input::getEncoderVelocity()
+{
+    // _encoderMillis is a snapshot of millis() taken
+    // when the encoder changed, with the most recent sample
+    // at index 0. Walk these, computing the average delta
+    // between them. If any values are reversed (so n-1 > n),
+    // the timer has rolled over and we just skip that value. 
+
+    cli();
+    uint16_t delta = 0;
+    size_t deltaCount = 0;
+    for (size_t idx = 0; idx < c_encoderMillisCount - 1; idx++)
+    {
+        if (_encoderMillis[idx] > _encoderMillis[idx + 1])
+        {
+            delta += (_encoderMillis[idx] - _encoderMillis[idx + 1]);
+            deltaCount++;
+        }
+    }
+    delta /= deltaCount;
+    sei();
+
+    constexpr uint16_t velocityValues[] =
+    {
+        40, 50, 60, 70, 80, 100, 150, 200, 250, 300
+    };
+
+    constexpr uint8_t velocityCount = sizeof(velocityValues) / sizeof(velocityValues[0]);
+
+    for (uint8_t velocity = 0; velocity < velocityCount; velocity++)
+    {
+        if (delta <= velocityValues[velocity])
+        {
+            return velocityCount - velocity;
+        }
+    }
+
+    return 1;
+}
+
 bool Input::getEncoderSelect()
 {
     bool sel = _state.Select;
@@ -80,6 +120,11 @@ void Input::reset()
     _state.Select = false;
     _state.Fire = false;
     _encoderDir = 0;
+
+    for (size_t idx = 0; idx < c_encoderMillisCount; idx++)
+    {
+        _encoderMillis[idx] = 0;
+    }
 }
 
 void Input::processInterrupt()
@@ -96,11 +141,14 @@ void Input::processInterrupt()
     // For the encoder position: check the pin that changed
     // and if the other pin is high, we have a confirmed change
     
+    bool updateEncoderMillis = false;
+    
     if (PIN_HIGH(interruptState, Pins::Inputs::EncoderA))
     {
         if (PIN_HIGH(pinState, Pins::Inputs::EncoderB))
         {
             _encoderDir++;
+            updateEncoderMillis = true;
         }
     }
     else if (PIN_HIGH(interruptState, Pins::Inputs::EncoderB))
@@ -108,7 +156,17 @@ void Input::processInterrupt()
         if (PIN_HIGH(pinState, Pins::Inputs::EncoderA))
         {
             _encoderDir--;
+            updateEncoderMillis = true;
         }
+    }
+
+    if (updateEncoderMillis)
+    {
+        for (size_t idx = c_encoderMillisCount - 1; idx > 0; idx--)
+        {
+            _encoderMillis[idx] = _encoderMillis[idx - 1];
+        }
+        _encoderMillis[0] = millis();
     }
 
     // And the rest of the button states. Changes that are momentary

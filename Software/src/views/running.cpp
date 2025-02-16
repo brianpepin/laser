@@ -23,12 +23,12 @@ bool RunningView::tick(View** newView)
     auto& status = Management::getSystemStatus();
 
     uint32_t m = millis();
-    if (m - _millis > 250)
+    if (m - _millis > 16)
     {
         _millis = m;
         _pump1Current = status.laser.led1.current;
         _pump2Current = status.laser.led2.current;
-        _outputPower = status.outputPower;    
+        _outputPower = status.power.laserOutputPower;    
         _tecStatus = status.tec;
         _laserOk = status.laser.ok;
 
@@ -67,16 +67,23 @@ bool RunningView::tick(View** newView)
     if (dir != 0)
     {
         float cur = laser.getCurrent();
-        cur += (dir / 2);
+        cur += .1 * dir * input.getEncoderVelocity();
         laser.setCurrent(cur);
         settings.current = laser.getCurrent();
-        settings.save();
+        _writeSettings = true;
+        _settingsMillis = m;
         update = true;
     }
 
     if (input.getEncoderSelect())
     {
         *newView = Management::getView(ViewId::Menu);
+    }
+
+    if (_writeSettings && m - _settingsMillis > 5000)
+    {
+        settings.save();
+        _writeSettings = false;
     }
 
     return update;

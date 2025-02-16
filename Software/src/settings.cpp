@@ -3,7 +3,15 @@
 #include "settings.h"
 #include "config.h"
 
-#define VERSION 1
+#define VERSION 2
+
+static uint16_t _DefaultAdcFromPower(float power)
+{
+    // y = mx + b;
+    // (y - b) / m = x;
+
+    return (power - Calibration::LaserMonitor::Offset) / Calibration::LaserMonitor::Slope;
+}
 
 void Settings::load()
 {
@@ -22,6 +30,9 @@ void Settings::load()
         temps.pump2 = ::Defaults::Temperatures::Pump2;
         temps.vanadate = ::Defaults::Temperatures::Vanadate;
         temps.ktp = ::Defaults::Temperatures::Ktp;
+
+        calibration.power.value = 10;
+        calibration.power.adc = _DefaultAdcFromPower(calibration.power.value);
 
         current = 0;
         displayMode = DisplayMode::Current;

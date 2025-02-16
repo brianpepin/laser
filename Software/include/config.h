@@ -43,9 +43,9 @@ namespace Pins
 
     namespace Led
     {
-        constexpr static uint8_t Red    = PIN_PC2;
+        constexpr static uint8_t Red    = PIN_PC0;
         constexpr static uint8_t Green  = PIN_PC1;
-        constexpr static uint8_t Blue   = PIN_PC0;
+        constexpr static uint8_t Blue   = PIN_PC2;
 
         constexpr static uint8_t Fire   = PIN_PC3;
         constexpr static uint8_t Ready  = PIN_PC4;

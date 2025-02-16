@@ -33,6 +33,7 @@ public:
     Tec();
 
     void enable(bool enable);
+    void setSimulation(const Status* simulatedStatus);
     float readTemp(Channel channel);
     void setTemp(Channel channel, float tempC);
     void setCurrent(Channel channel, float percent);
@@ -49,7 +50,6 @@ private:
         bool inTolerance(float actualTemp);
         float offset(float temp);
 
-
     private:
         Channel _channel;
         float _setTemp = 0;
@@ -60,4 +60,5 @@ private:
     DAC108S085 _dac;
     ADC104S021 _adc;
     Target _targets[4];
+    const Status* _simulatedStatus = nullptr;
 };

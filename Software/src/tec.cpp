@@ -51,6 +51,11 @@ void Tec::enable(bool enable)
     digitalWrite(Pins::Tec::Enable, enable ? HIGH : LOW);
 }
 
+void Tec::setSimulation(const Status* simulatedStatus)
+{
+    _simulatedStatus = simulatedStatus;
+}
+
 float Tec::readTemp(Channel channel)
 {
     float temp = convertTemp(_adc.readValue((uint16_t)channel));
@@ -81,6 +86,11 @@ Tec::Status Tec::getStatus()
 {
     Status status;
 
+    if (_simulatedStatus != nullptr)
+    {
+        status = *_simulatedStatus;
+    }
+
     ChannelStatus* ch[] =
     {
         &status.pump1,
@@ -93,9 +103,17 @@ Tec::Status Tec::getStatus()
 
     for (uint8_t i = 0; i < 4; i++)
     {
-        float temp = convertTemp(_adc.readValue(i));
-        ch[i]->ok = _targets[i].inTolerance(temp);
-        ch[i]->temp = _targets[i].offset(temp);
+        if (_simulatedStatus == nullptr)
+        {
+            float temp = convertTemp(_adc.readValue(i));
+            temp = _targets[i].offset(temp);
+            ch[i]->ok = _targets[i].inTolerance(temp);
+            ch[i]->temp = temp;
+        }
+        else
+        {
+            ch[i]->ok = _targets[i].inTolerance(ch[i]->temp);
+        }
         status.ok &= ch[i]->ok;
     }
 
@@ -143,12 +161,12 @@ bool Tec::Target::inTolerance(float actualTemp)
             break;
     }
 
-    if (_out && abs(_setTemp - offset(actualTemp)) < (tolerance / 2.0))
+    if (_out && abs(_setTemp - actualTemp) < (tolerance / 2.0))
     {
         _out = false;
     }
 
-    bool inBounds = (abs(_setTemp - offset(actualTemp)) < tolerance);
+    bool inBounds = (abs(_setTemp - actualTemp) < tolerance);
     if (!inBounds)
     {
         _out = true;

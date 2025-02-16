@@ -24,7 +24,7 @@ bool BatteryView::tick(View**)
 
     auto& status = Management::getSystemStatus();
 
-    float level = status.battery.voltage;
+    float level = status.power.batteryVoltage;
     float range = Limits::Voltage::HiBat - Limits::Voltage::LowBat;
 
     level -= Limits::Voltage::LowBat;
@@ -45,9 +45,9 @@ bool BatteryView::tick(View**)
         update = true;
     }
 
-    if (_state.charging != status.battery.charging)
+    if (_state.charging != status.power.batteryCharging)
     {
-        _state.charging = status.battery.charging;
+        _state.charging = status.power.batteryCharging;
         _state.blink = false;
         update = true;
     }

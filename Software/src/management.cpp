@@ -42,25 +42,22 @@ namespace Management
     {
         _systemStatus.laser = laser.getStatus();
         _systemStatus.tec = tec.getStatus();
+        _systemStatus.power = _power.getStatus();
+
         _systemStatus.ok =
             _systemStatus.laser.ok &&
             _systemStatus.tec.ok;
-
-        _systemStatus.battery.voltage = _power.getBatteryVoltage();
-        _systemStatus.battery.charging = _power.isBatteryCharging();
-
-        _systemStatus.outputPower = _power.getLaserOutputPower();
 
         if (!input.getInterlockSwitch())
         {
             enable(false);
         }
 
-        if (_systemStatus.battery.voltage > Limits::Voltage::LowBat)
+        if (_systemStatus.power.batteryVoltage > Limits::Voltage::LowBat)
         {
             _flags.criticalBattery = false;
         }
-        else if (_systemStatus.battery.voltage < Limits::Voltage::CriticalBat)
+        else if (_systemStatus.power.batteryVoltage < Limits::Voltage::CriticalBat)
         {
             _flags.criticalBattery = true;
         }
@@ -151,6 +148,30 @@ namespace Management
         }
     }
 
+    //
+    // Used during debugging to set parameters of the status.
+    // Calling this with a non-null status will enter simulation
+    // mode for this and all subsystems. In simulation mode, laser
+    // power output tracks input requests. Calling this with null
+    // ends the simulation. To change simulation values call
+    // setSimulation again.
+    //
+    void setSimulation(const SystemStatus* simulatedStatus)
+    {
+        if (simulatedStatus != nullptr)
+        {
+            laser.setSimulation(&simulatedStatus->laser);
+            tec.setSimulation(&simulatedStatus->tec);
+            _power.setSimulation(&simulatedStatus->power);
+        }
+        else
+        {
+            laser.setSimulation(nullptr);
+            tec.setSimulation(nullptr);
+            _power.setSimulation(nullptr);
+        }
+    }
+
     void restart()
     {
         if (_flags.enabled)
@@ -186,7 +207,7 @@ namespace Management
             update |= Views::battery.tick(&newView);
         }
 
-        led.setCharging(_systemStatus.battery.charging);
+        led.setCharging(_systemStatus.power.batteryCharging);
         led.setInterlock(input.getInterlockSwitch());
         led.setCriticalBattery(_flags.criticalBattery);
         led.setError(_flags.enabled && !_systemStatus.ok);
