@@ -544,7 +544,6 @@
 	(hierarchical_label "SW"
 		(shape input)
 		(at 85.09 73.66 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)

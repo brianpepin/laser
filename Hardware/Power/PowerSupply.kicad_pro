@@ -1,5 +1,6 @@
 {
   "board": {
+    "3dviewports": [],
     "design_settings": {
       "defaults": {
         "board_outline_line_width": 0.049999999999999996,
@@ -145,7 +146,15 @@
       "zones_allow_external_fillets": false,
       "zones_use_no_outline": true
     },
-    "layer_presets": []
+    "ipc2581": {
+      "dist": "",
+      "distpn": "",
+      "internal_id": "",
+      "mfg": "",
+      "mpn": ""
+    },
+    "layer_presets": [],
+    "viewports": []
   },
   "boards": [],
   "cvpcb": {
@@ -367,7 +376,7 @@
   "net_settings": {
     "classes": [
       {
-        "bus_width": 12.0,
+        "bus_width": 12,
         "clearance": 0.127,
         "diff_pair_gap": 0.2032,
         "diff_pair_via_gap": 0.25,
@@ -381,10 +390,10 @@
         "track_width": 0.2032,
         "via_diameter": 0.6858,
         "via_drill": 0.3302,
-        "wire_width": 6.0
+        "wire_width": 6
       },
       {
-        "bus_width": 12.0,
+        "bus_width": 12,
         "clearance": 0.2,
         "diff_pair_gap": 0.2032,
         "diff_pair_via_gap": 0.25,
@@ -393,89 +402,276 @@
         "microvia_diameter": 0.6858,
         "microvia_drill": 0.3302,
         "name": "Tracks",
-        "nets": [
-          "+12V",
-          "+3V3",
-          "+5V",
-          "+BATT",
-          "/LaserDriver/BST1",
-          "/LaserDriver/BST2",
-          "/LaserDriver/DH1",
-          "/LaserDriver/DH2",
-          "/LaserDriver/DL1",
-          "/LaserDriver/DL2",
-          "/LaserDriver/LX1",
-          "/LaserDriver/LX2",
-          "/LaserDriver/OUT1",
-          "/LaserDriver/OUT2",
-          "/LaserDriver/TON1",
-          "/LaserDriver/TON2",
-          "/LaserDriver/VCCA",
-          "/LaserDriver/~{RESETB}",
-          "/PowerControl/PGATE",
-          "BATT_SW",
-          "BAT_CURRENT",
-          "BAT_VOLT",
-          "GND",
-          "LASER_MON",
-          "MISO",
-          "MOSI",
-          "Net-(C25-Pad1)",
-          "Net-(C32-Pad1)",
-          "Net-(D10-Pad2)",
-          "Net-(D11-Pad2)",
-          "Net-(D6-Pad2)",
-          "Net-(D7-Pad2)",
-          "Net-(D8-Pad2)",
-          "Net-(D9-Pad2)",
-          "Net-(FL1-Pad1)",
-          "Net-(FL10-Pad1)",
-          "Net-(FL2-Pad1)",
-          "Net-(FL3-Pad1)",
-          "Net-(FL4-Pad1)",
-          "Net-(FL5-Pad1)",
-          "Net-(FL7-Pad1)",
-          "Net-(FL9-Pad1)",
-          "Net-(L1-Pad2)",
-          "Net-(L2-Pad2)",
-          "Net-(L5-Pad2)",
-          "Net-(Q10-Pad3)",
-          "Net-(Q13-Pad1)",
-          "Net-(Q2-Pad1)",
-          "Net-(Q4-Pad1)",
-          "Net-(Q9-Pad4)",
-          "Net-(R1-Pad2)",
-          "PHOTODIODE",
-          "SCK",
-          "VDC",
-          "~{CHARGE}",
-          "~{CS_CHARGE}",
-          "~{CS_LASER}",
-          "~{INTERLOCK_EN}",
-          "~{INTERLOCK_SW}",
-          "~{RST_LASER}",
-          "~{TMP_LASER}"
-        ],
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.2032,
         "via_diameter": 0.6858,
         "via_drill": 0.3302,
-        "wire_width": 6.0
+        "wire_width": 6
       }
     ],
     "meta": {
-      "version": 2
+      "version": 3
     },
-    "net_colors": null
+    "net_colors": null,
+    "netclass_assignments": null,
+    "netclass_patterns": [
+      {
+        "netclass": "Tracks",
+        "pattern": "+12V"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "+3V3"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "+5V"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "+BATT"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/BST1"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/BST2"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/DH1"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/DH2"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/DL1"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/DL2"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/LX1"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/LX2"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/OUT1"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/OUT2"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/TON1"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/TON2"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/VCCA"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/LaserDriver/~{RESETB}"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "/PowerControl/PGATE"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "BATT_SW"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "BAT_CURRENT"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "BAT_VOLT"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "GND"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "LASER_MON"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "MISO"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "MOSI"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(C25-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(C32-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(D10-Pad2)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(D11-Pad2)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(D6-Pad2)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(D7-Pad2)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(D8-Pad2)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(D9-Pad2)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(FL1-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(FL10-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(FL2-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(FL3-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(FL4-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(FL5-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(FL7-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(FL9-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(L1-Pad2)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(L2-Pad2)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(L5-Pad2)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(Q10-Pad3)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(Q13-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(Q2-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(Q4-Pad1)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(Q9-Pad4)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "Net-(R1-Pad2)"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "PHOTODIODE"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "SCK"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "VDC"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "~{CHARGE}"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "~{CS_CHARGE}"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "~{CS_LASER}"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "~{INTERLOCK_EN}"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "~{INTERLOCK_SW}"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "~{RST_LASER}"
+      },
+      {
+        "netclass": "Tracks",
+        "pattern": "~{TMP_LASER}"
+      }
+    ]
   },
   "pcbnew": {
     "last_paths": {
       "gencad": "",
       "idf": "",
       "netlist": "",
+      "plot": "",
+      "pos_files": "",
       "specctra_dsn": "",
       "step": "../../../../../Laser/Board Cad Renders/PowerSupply.STEP",
+      "svg": "",
       "vrml": ""
     },
     "page_layout_descr_file": ""
