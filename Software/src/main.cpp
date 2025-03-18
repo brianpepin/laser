@@ -11,7 +11,7 @@
 //
 
 Settings settings;
-U8G2_SSD1322_NHD_256X64_1_4W_HW_SPI display(U8G2_R0, Pins::Display::Cs, Pins::Display::Dc, Pins::Display::Reset);
+DISPLAY_TARGET display(U8G2_R0, Pins::Display::Cs, Pins::Display::Dc, Pins::Display::Reset);
 Led led;
 Input input;
 Laser laser;
