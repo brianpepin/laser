@@ -150,6 +150,8 @@ void Laser::enable(bool enable, Channel channel)
         return;
     }
 
+    bool wasEnabled = false;
+
     // Disable immediately.  Enable happens through tick
     // to ramp current up.
 
@@ -161,12 +163,19 @@ void Laser::enable(bool enable, Channel channel)
 
     for (uint8_t idx = 0; idx < 2; idx++)
     {
+        wasEnabled |= _driver.getEnabled(idx);
+
         if (!_driver.setCurrent(idx, 0) ||
             !_driver.setEnabled(idx, enable && changeChannel[idx]))
         {
             error();
         }
         _channelState[idx].actual = 0;
+    }
+
+    if (wasEnabled != enable)
+    {
+        Serial.printf("*** Laser %s ***\r\n", enable ? "ON" : "OFF");
     }
 }
 

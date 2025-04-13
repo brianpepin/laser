@@ -23,7 +23,8 @@ private:
         CalibrateAdc,
         ValueSelect,
         CalibrateSave,
-        CalibrateCancel
+        CalibrateCancel,
+        CalibrateAlignExit,
     };
 
     enum class ValueType
@@ -32,7 +33,8 @@ private:
         AlignCurrent,
         Current,
         Temp,
-        Power
+        Power,
+        Adc
     };
 
     class Value
@@ -44,6 +46,8 @@ private:
         void init(ValueType type, Settings::Calibration::Point* calibrationPoint);
         void adjust(int8_t dir, uint8_t velocity);
         void draw();
+        bool tick();
+        bool readOnly() { return _type == ValueType::Adc; }
     private:
         ValueType _type;
         Tec::Channel _channel;
@@ -51,12 +55,14 @@ private:
         DisplayMode* _displayMode;
         Settings::Calibration::Point* _calibrationPoint;
         int8_t _value;
+        uint16_t _adc;
+        float _power;
         float get();
         void set(float value);
         void updateState();
     };
 
-    constexpr static size_t c_maxItemValues = 2;
+    constexpr static size_t c_maxItemValues = 3;
 
     struct Item
     {
@@ -79,7 +85,7 @@ private:
     uint8_t _buttonIndex;
 
     void clearMenu();
-    void addItem(const __FlashStringHelper* text, Cmd cmd, Value* value1 = nullptr, Value* value2 = nullptr);
+    void addItem(const __FlashStringHelper* text, Cmd cmd, Value* value1 = nullptr, Value* value2 = nullptr, Value* value3 = nullptr);
     void addButton(const __FlashStringHelper* text, Cmd cmd, uint8_t width);
     void mainMenu();
     void alignmentMenu();

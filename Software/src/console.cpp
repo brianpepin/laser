@@ -280,8 +280,6 @@ namespace Console
         {
             _parser->parse(cmd);
         }
-
-        _parser->usage();
     }
 
     void tick()
