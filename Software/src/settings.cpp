@@ -7,9 +7,7 @@
 
 static uint16_t _DefaultAdcFromPower(float power)
 {
-    // y = mx + b;
     // (y - b) / m = x;
-
     return (power - Calibration::LaserMonitor::Offset) / Calibration::LaserMonitor::Slope;
 }
 
@@ -31,8 +29,9 @@ void Settings::load()
         temps.vanadate = ::Defaults::Temperatures::Vanadate;
         temps.ktp = ::Defaults::Temperatures::Ktp;
 
-        calibration.power.value = 10;
-        calibration.power.adc = _DefaultAdcFromPower(calibration.power.value);
+        calibration.power.input = 50.0;
+        calibration.power.output = 1.3;
+        calibration.power.adc = _DefaultAdcFromPower(calibration.power.output);
 
         current = 0;
         displayMode = DisplayMode::Current;

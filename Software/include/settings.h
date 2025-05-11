@@ -26,8 +26,9 @@ struct Settings
     {
         struct Point
         {
+            float input;
+            float output;
             uint16_t adc;
-            float value;
         };
 
         Point power;

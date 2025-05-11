@@ -43,7 +43,7 @@ private:
         void init(ValueType type, Tec::Channel channel);
         void init(Tec::Channel* fireChannel);
         void init(DisplayMode* displayMode);
-        void init(ValueType type, Settings::Calibration::Point* calibrationPoint);
+        void init(ValueType type, Settings::Calibration::Point* calibrationPoint, Settings::Calibration::Point* setPoint);
         void adjust(int8_t dir, uint8_t velocity);
         void draw();
         bool tick();
@@ -54,9 +54,8 @@ private:
         Tec::Channel* _fireChannel;
         DisplayMode* _displayMode;
         Settings::Calibration::Point* _calibrationPoint;
+        Settings::Calibration::Point* _setPoint;
         int8_t _value;
-        uint16_t _adc;
-        float _power;
         float get();
         void set(float value);
         void updateState();
@@ -76,6 +75,7 @@ private:
     const __FlashStringHelper* _title;
     Value _values[6];
     Item _items[12];
+    Settings::Calibration::Point _setPoints[3];
     bool _update;
     uint8_t _valueSelect;
     Tec::Channel _fireChannel;

@@ -38,14 +38,18 @@ void Laser::reset()
     _millis = 0;
 }
 
+#ifdef ENABLE_SIMULATION
 void Laser::setSimulation(const Status* simulatedStatus)
 {
     _simulatedStatus = simulatedStatus;
 }
+#endif
 
 void Laser::error()
 {
+    #ifdef ENABLE_SIMULATION
     if (_simulatedStatus == nullptr)
+    #endif
     {
         Serial.println(F("\n** MAX20096 COM Error. Resetting. **\n"));
         _state.once = false;
@@ -55,10 +59,12 @@ void Laser::error()
 
 Laser::Status Laser::getStatus()
 {
+    #ifdef ENABLE_SIMULATION
     if (_simulatedStatus != nullptr)
     {
         return *_simulatedStatus;
     }
+    #endif
 
     MAX20096::Status driverStatus = _driver.getStatus();
     Laser::Status status;

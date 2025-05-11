@@ -156,6 +156,7 @@ namespace Management
     // ends the simulation. To change simulation values call
     // setSimulation again.
     //
+    #ifdef ENABLE_SIMULATION
     void setSimulation(const SystemStatus* simulatedStatus)
     {
         if (simulatedStatus != nullptr)
@@ -171,6 +172,7 @@ namespace Management
             _power.setSimulation(nullptr);
         }
     }
+    #endif
 
     void restart()
     {

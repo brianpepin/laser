@@ -49,7 +49,9 @@ namespace Management
     // ends the simulation. To change simulation values call
     // setSimulation again.
     //
+    #ifdef ENABLE_SIMULATION
     void setSimulation(const SystemStatus* simulatedStatus);
+    #endif
 
     //
     // If enabled, this will perform a restart cycle.

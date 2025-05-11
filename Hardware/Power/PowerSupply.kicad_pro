@@ -510,7 +510,9 @@
     "meta": {
       "version": 3
     },
-    "net_colors": null,
+    "net_colors": {
+      "LASER_MON": "rgb(255, 255, 0)"
+    },
     "netclass_assignments": null,
     "netclass_patterns": [
       {

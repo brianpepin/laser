@@ -27,6 +27,8 @@ void MenuView::clearMenu()
     _lastFireChannel = _fireChannel;
     _itemCount = 0;
     _buttonIndex = 0xff;
+
+    led.enableFiring(false);
 }
 
 void MenuView::addItem(const __FlashStringHelper* text, Cmd cmd, Value* value1, Value* value2, Value* value3)
@@ -77,6 +79,7 @@ void MenuView::alignmentMenu()
 
     // laser firing will be hot here, so reset input state.
     input.reset();
+    led.enableFiring(true);
     _fireChannel = Tec::Channel::Pump1;
     _lastFireChannel = _fireChannel;
     
@@ -96,12 +99,19 @@ void MenuView::adcMenu()
 
     // laser firing will be hot here, so reset input state.
     input.reset();
+    led.enableFiring(true);
     _fireChannel = Tec::Channel::Ktp;
     _lastFireChannel = _fireChannel;
+
+    _setPoints[0] = settings.calibration.power;
+
+    auto* calPoint = &settings.calibration.power;
+    auto* setPoint = &_setPoints[0];
     
-    _values[0].init(ValueType::Current, Tec::Channel::Ktp);
-    _values[1].init(ValueType::Power, &settings.calibration.power);
-    _values[2].init(ValueType::Adc, &settings.calibration.power);
+    _values[0].init(ValueType::Current, calPoint, setPoint);
+    _values[1].init(ValueType::Power, calPoint, setPoint);
+    _values[2].init(ValueType::Adc, calPoint, setPoint);
+
     addItem(F("OUTPUT POWER"), Cmd::ValueSelect, &_values[0], &_values[1], &_values[2]);
 
     addButton(F("SAVE"), Cmd::CalibrateSave, 4);
@@ -122,11 +132,13 @@ void MenuView::calibrationMenu()
 
 void MenuView::calibrateItem(const __FlashStringHelper* title, Tec::Channel channel)
 {
+    clearMenu();
+
     // laser firing will be hot here, so reset input state.
     input.reset();
+    led.enableFiring(true);
 
     size_t idx = 0;
-    clearMenu();
     _title = title;
     _fireChannel = channel;
     _lastFireChannel = _fireChannel;
@@ -166,6 +178,7 @@ void MenuView::processCmd(Cmd cmd, View** newView)
     {
         default:
         case Cmd::Exit:
+            settings.save();
             *newView = _prevView;
             break;
 
@@ -433,7 +446,7 @@ void MenuView::Value::init(ValueType type, Tec::Channel channel)
     _channel = channel;
     _fireChannel = nullptr;
     _displayMode = nullptr;
-    memset(&_value, 0, sizeof(_value));
+    _value = 0;
 }
 
 void MenuView::Value::init(Tec::Channel* fireChannel)
@@ -442,7 +455,7 @@ void MenuView::Value::init(Tec::Channel* fireChannel)
     _channel = Tec::Channel::Pump1;
     _fireChannel = fireChannel;
     _displayMode = nullptr;
-    memset(&_value, 0, sizeof(_value));
+    _value = 0;
     updateState();
 }
 
@@ -452,19 +465,23 @@ void MenuView::Value::init(DisplayMode* displayMode)
     _channel = Tec::Channel::Pump1;
     _fireChannel = nullptr;
     _displayMode = displayMode;
-    memset(&_value, 0, sizeof(_value));
+    _value = 0;
 }
 
-void MenuView::Value::init(ValueType type, Settings::Calibration::Point* calibrationPoint)
+void MenuView::Value::init(ValueType type, Settings::Calibration::Point* calibrationPoint, Settings::Calibration::Point* setPoint)
 {
     _type = type;
     _channel = Tec::Channel::Ktp;
     _fireChannel = nullptr;
     _displayMode = nullptr;
     _calibrationPoint = calibrationPoint;
-    _adc = _calibrationPoint->adc;
-    _power = _calibrationPoint->value;
-    memset(&_value, 0, sizeof(_value));
+    _setPoint = setPoint;
+    _value = 0;
+
+    if (_type == ValueType::Current)
+    {
+        laser.setCurrent(_setPoint->input);
+    }
 }
 
 void MenuView::Value::draw()
@@ -495,7 +512,7 @@ void MenuView::Value::draw()
     else if (_type == ValueType::Adc)
     {
         display.print("(");
-        display.print(_adc);
+        display.print(_setPoint->adc);
         display.print(")");
     }
     else
@@ -536,16 +553,20 @@ bool MenuView::Value::tick()
     {
         switch (_type)
         {
+            case ValueType::Current:
+                _setPoint->input = laser.getCurrent();
+                return true;
+
             case ValueType::Adc:
-                _adc = Management::getSystemStatus().power.adc.laserOutputPower;
+                _setPoint->adc = Management::getSystemStatus().power.adc.laserOutputPower;
                 return true;
 
             case ValueType::Power:
-                _adc = Management::getSystemStatus().power.adc.laserOutputPower;
-                _power = Management::getSystemStatus().power.laserOutputPower;
+                _setPoint->output = Management::getSystemStatus().power.laserOutputPower;
                 return true;
         }
     }
+
     return false;
 }
 
@@ -572,8 +593,7 @@ void MenuView::Value::adjust(int8_t dir, uint8_t velocity)
         {
             case ValueType::Power:
                 delta = .001 * dir;
- 
-                if (velocity > 1)
+                if (velocity > 5)
                 {
                     delta *= (velocity * 10);
                 }
@@ -644,11 +664,15 @@ float MenuView::Value::get()
                 default:
                     break;
                 case ValueType::Current:
+                    if (_setPoint != nullptr)
+                    {
+                        return _setPoint->input;
+                    }
                     return laser.getCurrent();
                 case ValueType::Temp:
                     return settings.temps.ktp;
                 case ValueType::Power:
-                    return _power;
+                    return _setPoint->output;
             }
             break;
     }
@@ -731,17 +755,25 @@ void MenuView::Value::set(float value)
                     break;
                 case ValueType::Current:
                     laser.setCurrent(value);
+                    if (_setPoint != nullptr)
+                    {
+                        _setPoint->input = laser.getCurrent();
+
+                        if (!laser.getEnabled())
+                        {
+                            _setPoint->adc = 0;
+                        }
+                    }
                     break;
                 case ValueType::Temp:
                     tec.setTemp(_channel, value);
                     settings.temps.ktp = value;
                     break;
                 case ValueType::Power:
-                    if (_adc != 0)
+                    if (_setPoint->adc != 0)
                     {
-                        _calibrationPoint->adc = _adc;
-                        _power = clamp<float>(value, .001, 40.0);
-                        _calibrationPoint->value = _power;
+                        _setPoint->output = clamp<float>(value, .001, 40.0);
+                        *_calibrationPoint = *_setPoint;
                     }
                     break;
             }

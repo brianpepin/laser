@@ -41,7 +41,10 @@ namespace Console
     char _buffer[_bufferMax + 1];
     uint8_t _bufferLen;
     static Parser* _parser = &Cmds::global;
+
+    #ifdef ENABLE_SIMULATION
     SystemStatus _simulatedStatus{};
+    #endif
     
     void printTecChannelStatus(const Tec::ChannelStatus& tecStatus)
     {
@@ -174,6 +177,7 @@ namespace Console
         Serial.println();
     }
 
+    #ifdef ENABLE_SIMULATION
     void initializeSimulation()
     {
         _simulatedStatus.laser.ok = true;
@@ -190,6 +194,7 @@ namespace Console
         _simulatedStatus.tec.pump2.temp = Defaults::Temperatures::Pump2;
         _simulatedStatus.tec.vanadate.temp = Defaults::Temperatures::Vanadate;
     }
+    #endif
 
     bool GlobalCommands::parse(const char* cmd)
     {
@@ -199,16 +204,13 @@ namespace Console
                 printStatus();
                 return true;
 
-            case 'a':
-                printAdc();
-                return true;
-
             case 'f':
                 input.toggleFireSwitch();
                 return true;
 
             case 'd':
                 _parser = &Cmds::diag;
+                _parser->usage();
                 return true;
         }
 
@@ -217,8 +219,8 @@ namespace Console
 
     void GlobalCommands::usage()
     {
-        Serial.println(F("\ns : Status Report"));
-        Serial.println(F("a : Read ADC values"));
+        Serial.println(F("\nMain Menu\n"));
+        Serial.println(F("s : Status Report"));
         Serial.println(F("f : Toggle fire switch"));
         Serial.println(F("d : Enter diagnostic menu\n"));
     }
@@ -227,21 +229,31 @@ namespace Console
     {
         switch (*cmd)
         {
+            #ifdef ENABLE_SIMULATION
             case 's':
                 initializeSimulation();
                 Management::setSimulation(&_simulatedStatus);
+                Serial.println(F("Started simulation"));
                 return true;
 
             case 'e':
                 Management::setSimulation(nullptr);
+                Serial.println(F("Ended simulation"));
+                return true;
+            #endif
+     
+            case 'a':
+                printAdc();
                 return true;
 
             case 'r':
                 Management::restart();
+                Serial.println(F("*** Controller Reset ***"));
                 return true;
 
             case 'x':
                 _parser = &Cmds::global;
+                _parser->usage();
                 return true;
         }
 
@@ -250,8 +262,14 @@ namespace Console
 
     void DiagnosticCommands::usage()
     {
-        Serial.println(F("\ns : Enter simulation mode"));
+        Serial.println(F("\nDiagnostic Menu\n"));
+
+        #ifdef ENABLE_SIMULATION
+        Serial.println(F("s : Enter simulation mode"));
         Serial.println(F("e : End simulation mode"));
+        #endif
+
+        Serial.println(F("a : Read ADC values"));
         Serial.println(F("r : Reset"));
         Serial.println(F("x : Exit menu\n"));
     }

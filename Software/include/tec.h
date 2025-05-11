@@ -33,12 +33,15 @@ public:
     Tec();
 
     void enable(bool enable);
-    void setSimulation(const Status* simulatedStatus);
     float readTemp(Channel channel);
     void setTemp(Channel channel, float tempC);
     void setCurrent(Channel channel, float percent);
 
     Status getStatus();
+
+    #ifdef ENABLE_SIMULATION
+    void setSimulation(const Status* simulatedStatus);
+    #endif
 
 private:
 
@@ -60,5 +63,8 @@ private:
     DAC108S085 _dac;
     ADC104S021 _adc;
     Target _targets[4];
+
+    #ifdef ENABLE_SIMULATION
     const Status* _simulatedStatus = nullptr;
+    #endif
 };

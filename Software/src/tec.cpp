@@ -51,10 +51,12 @@ void Tec::enable(bool enable)
     digitalWrite(Pins::Tec::Enable, enable ? HIGH : LOW);
 }
 
+#ifdef ENABLE_SIMULATION
 void Tec::setSimulation(const Status* simulatedStatus)
 {
     _simulatedStatus = simulatedStatus;
 }
+#endif
 
 float Tec::readTemp(Channel channel)
 {
@@ -86,10 +88,12 @@ Tec::Status Tec::getStatus()
 {
     Status status;
 
+    #ifdef ENABLE_SIMULATION
     if (_simulatedStatus != nullptr)
     {
         status = *_simulatedStatus;
     }
+    #endif
 
     ChannelStatus* ch[] =
     {
@@ -103,16 +107,18 @@ Tec::Status Tec::getStatus()
 
     for (uint8_t i = 0; i < 4; i++)
     {
-        if (_simulatedStatus == nullptr)
+        #ifdef ENABLE_SIMULATION
+        if (_simulatedStatus != nullptr)
+        {
+            ch[i]->ok = _targets[i].inTolerance(ch[i]->temp);
+        }
+        else
+        #endif
         {
             float temp = convertTemp(_adc.readValue(i));
             temp = _targets[i].offset(temp);
             ch[i]->ok = _targets[i].inTolerance(temp);
             ch[i]->temp = temp;
-        }
-        else
-        {
-            ch[i]->ok = _targets[i].inTolerance(ch[i]->temp);
         }
         status.ok &= ch[i]->ok;
     }

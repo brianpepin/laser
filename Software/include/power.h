@@ -23,15 +23,20 @@ public:
 
     Power();
     void tick();
-    void setSimulation(const Status* simulatedStatus);
     Status getStatus();
+
+    #ifdef ENABLE_SIMULATION
+    void setSimulation(const Status* simulatedStatus);
+    #endif
 
 private:
 
-    constexpr static uint8_t _averageCount = 5;
+    constexpr static float _filterAlpha = .9;
 
     ADC104S021 _adc;
-    uint16_t _powerAverages[_averageCount];
-    uint8_t _nextPowerAverage;
+    uint16_t _powerReading;
+
+    #ifdef ENABLE_SIMULATION
     const Status* _simulatedStatus = nullptr;
+    #endif
 };

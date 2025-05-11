@@ -4,28 +4,31 @@
 
 Power::Power() :
     _adc(Pins::Power::Cs),
-    _nextPowerAverage(0)
+    _powerReading(0)
 {
-    memset(_powerAverages, 0, sizeof(_powerAverages));
 }
 
 void Power::tick()
 {
-    _powerAverages[_nextPowerAverage] = _adc.readValue(3);
-    _nextPowerAverage = (_nextPowerAverage + 1) % _averageCount;
+    uint16_t adcValue = _adc.readValue(3);
+    _powerReading = (uint16_t)((1.0 - _filterAlpha) * adcValue + _filterAlpha * _powerReading );
 }
 
+#ifdef ENABLE_SIMULATION
 void Power::setSimulation(const Status* simulatedStatus)
 {
     _simulatedStatus = simulatedStatus;
 }
+#endif
 
 Power::Status Power::getStatus()
 {
+    #ifdef ENABLE_SIMULATION
     if (_simulatedStatus != nullptr)
     {
         return *_simulatedStatus;
     }
+    #endif
 
     Status status{};
     uint16_t adcValue;
@@ -44,22 +47,15 @@ Power::Status Power::getStatus()
     status.batteryCharging = adcValue < _adc.max / 2;
 
     // Laser Output Power
-    adcValue = 0;
-
-    for (uint8_t idx = 0; idx < _averageCount; idx++)
-    {
-        adcValue += _powerAverages[idx];
-    }
-
-    adcValue /= _averageCount;
-    status.adc.laserOutputPower = static_cast<uint16_t>(adcValue);
+    adcValue = _powerReading;
+    status.adc.laserOutputPower = adcValue;
 
     // For output power calibration we store a power
     // and ADC value and assume p=0 when adc=0;
 
     if (adcValue != 0)
     {
-        float cp = settings.calibration.power.value;
+        float cp = settings.calibration.power.output;
         float cadc = settings.calibration.power.adc;
         float slope = cp / cadc;
         status.laserOutputPower = slope * adcValue;

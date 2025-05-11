@@ -41,7 +41,7 @@ uint8_t Input::getEncoderVelocity()
 
     constexpr uint16_t velocityValues[] =
     {
-        40, 50, 60, 70, 80, 100, 150, 200, 250, 300
+        10, 30, 50, 80, 100, 110, 120, 130, 140, 150
     };
 
     constexpr uint8_t velocityCount = sizeof(velocityValues) / sizeof(velocityValues[0]);
@@ -102,9 +102,13 @@ void Input::reset()
     Pins::Inputs::Port.DIR = ~inputs;
 
     // Configure inputs as follows: invert polarity and configure
-    // the interrupt on the leading edge.
-    Pins::Inputs::Port.PINCONFIG = PORT_INVEN_bm | PORT_ISC_RISING_gc;
+    // the interrupt on both edges.
+    Pins::Inputs::Port.PINCONFIG = PORT_INVEN_bm | PORT_ISC_BOTHEDGES_gc;
     Pins::Inputs::Port.PINCTRLUPD = inputs;
+
+    // All inputs use Schmitt triggers
+    Pins::Inputs::Port.PINCONFIG = PORT_INLVL_bm;
+    Pins::Inputs::Port.PINCTRLCLR = inputs;
 
     // Pins that are not using hardware debounce need to be marked as pullups.
     Pins::Inputs::Port.PINCONFIG = PORT_PULLUPEN_bm;
@@ -137,6 +141,12 @@ void Input::processInterrupt()
         // IRQ pin going back to low -- ignore.
         return;
     }
+
+    // We listen to both rising and falling edges to capture
+    // temp and interlock transitions. But we really only
+    // care about rising edges for interrupts. 
+
+    interruptState &= pinState;
 
     // For the encoder position: check the pin that changed
     // and if the other pin is high, we have a confirmed change

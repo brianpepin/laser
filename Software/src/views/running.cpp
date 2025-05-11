@@ -8,12 +8,14 @@ void RunningView::start(View*)
     input.reset();
     laser.enable(false);
     laser.setCurrent(settings.current);
+    led.enableFiring(true);
 }
 
 void RunningView::stop()
 {
     input.reset();
     laser.enable(false);
+    led.enableFiring(false);
 }
 
 bool RunningView::tick(View** newView)

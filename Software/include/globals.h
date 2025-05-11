@@ -3,6 +3,10 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
 
+// Uncomment this define to enable support for "simulating" missing
+// boards for testing.
+//#define ENABLE_SIMULATION
+
 #include "input.h"
 #include "laser.h"
 #include "led.h"

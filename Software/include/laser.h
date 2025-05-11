@@ -21,8 +21,11 @@ public:
 
     Laser();
 
-    void reset();
+    #ifdef ENABLE_SIMULATION
     void setSimulation(const Status* simulatedStatus);
+    #endif
+
+    void reset();
     Status getStatus();
     float getCurrent(Channel channel = Channel::Auto);
     float getMaxCurrent();
@@ -50,7 +53,10 @@ private:
     State _state;
     ChannelState _channelState[2];
     uint32_t _millis;
+
+    #ifdef ENABLE_SIMULATION
     const Status* _simulatedStatus = nullptr;
+    #endif
 
     void error();
 };
