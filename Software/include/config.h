@@ -94,10 +94,10 @@ namespace Defaults
 {
     namespace Temperatures
     {
-        constexpr static float Pump1 = 27.5;
-        constexpr static float Pump2 = 23.5;
+        constexpr static float Pump1 = 28;
+        constexpr static float Pump2 = 25;
         constexpr static float Vanadate = 23;
-        constexpr static float Ktp = 29.6;
+        constexpr static float Ktp = 36;
     }
 
     namespace Currents

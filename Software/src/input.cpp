@@ -3,6 +3,8 @@
 #include "config.h"
 
 #define PIN_HIGH(state, pin) ((state & (1 << pin)) != 0)
+#define FIRE_ENABLE_DELAY 500
+#define FIRE_DISABLE_DELAY 100
 
 Input::Input()
 {
@@ -66,6 +68,16 @@ bool Input::getEncoderSelect()
 
 bool Input::getFireSwitch()
 {
+    if (_fireMillis != 0 &&
+        millis() - _fireMillis >= (_state.Fire ? FIRE_DISABLE_DELAY : FIRE_ENABLE_DELAY))
+    {
+        if (PIN_HIGH(Pins::Inputs::Port.IN, Pins::Inputs::Fire))
+        {
+            _state.Fire = !_state.Fire;
+        }
+        _fireMillis = 0;
+    }
+
     return _state.Fire;
 }
 
@@ -123,6 +135,7 @@ void Input::reset()
     _state.Temp = PIN_HIGH(initialState, Pins::Inputs::OverTemp);
     _state.Select = false;
     _state.Fire = false;
+    _fireMillis = 0;
     _encoderDir = 0;
 
     for (size_t idx = 0; idx < c_encoderMillisCount; idx++)
@@ -187,9 +200,12 @@ void Input::processInterrupt()
     _state.Interlock = PIN_HIGH(pinState, Pins::Inputs::InterlockEnable);
     _state.Temp = PIN_HIGH(pinState, Pins::Inputs::OverTemp);
 
+    // For the fire button, require it to be pressed for a bit before
+    // changing state.
+
     if (PIN_HIGH(interruptState, Pins::Inputs::Fire))
     {
-        _state.Fire = !_state.Fire;
+        _fireMillis = millis();
     }
 
     // Clear the interrupt state

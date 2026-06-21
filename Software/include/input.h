@@ -39,6 +39,7 @@ private:
     
     volatile State _state;
     volatile int8_t _encoderDir;
-    volatile uint16_t _encoderMillis[c_encoderMillisCount];
+    volatile unsigned long _encoderMillis[c_encoderMillisCount];
+    volatile unsigned long _fireMillis;
 
 };
