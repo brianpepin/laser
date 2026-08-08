@@ -11,7 +11,7 @@
 //
 
 Settings settings;
-U8G2_SSD1322_NHD_256X64_1_4W_HW_SPI display(U8G2_R0, Pins::Display::Cs, Pins::Display::Dc, Pins::Display::Reset);
+DISPLAY_TARGET display(U8G2_R0, Pins::Display::Cs, Pins::Display::Dc, Pins::Display::Reset);
 Led led;
 Input input;
 Laser laser;
@@ -20,7 +20,7 @@ Tec tec;
 //
 // Inputs are handled by a pin change interrupt.
 //
-ISR(PCINT2_vect)
+ISR(PORTD_PORT_vect)
 {
   input.processInterrupt();
 }
@@ -33,6 +33,15 @@ void setup()
   Serial.println(F("\nController starting up..."));
 
   //
+  // Configure LEDs. LEDs are currently configured all on port C
+  // but PWM off timer A does not route there. Change the routing to
+  // enable PWM on port C before starting LEDs.
+  //
+
+  PORTMUX_TCAROUTEA = PORTMUX_TCA0_PORTC_gc;
+  led.begin();
+
+  //
   // Configure SPI port
   //
 
@@ -41,7 +50,6 @@ void setup()
   pinMode(Pins::Spi::Mosi, OUTPUT);
   pinMode(Pins::Spi::Sck, OUTPUT);
   digitalWrite(Pins::Spi::Ss, HIGH);
-  SPI.usingInterrupt(255);
 
   //
   // Configure display
@@ -50,17 +58,9 @@ void setup()
   pinMode(Pins::Display::Cs, OUTPUT);
   pinMode(Pins::Display::Reset, OUTPUT);
   pinMode(Pins::Display::Dc, OUTPUT);
-  display.setBusClock(10000000);
+  display.setBusClock(8000000);
   display.begin();
   display.clear();
-
-  //
-  // Configure a pin change interrupt for 
-  // our buttons
-  //
-
-  PCICR |= (1 << PCIE2); // Enable pin change interrupt 2 (D pins)
-  PCMSK2 |= (1 << Pins::Gpio::Irq);
 
   //
   // Read settings from EEPROM and configure
@@ -71,12 +71,6 @@ void setup()
 
   laser.reset();
   input.reset();
-
-  //
-  // Now enable interrupts to start processing input.
-  //
-
-  sei();
 
   Serial.println(F("Ready."));
 }

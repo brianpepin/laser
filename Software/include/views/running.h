@@ -11,8 +11,10 @@ public:
 
 private:
     uint32_t _millis = 0;
+    uint32_t _settingsMillis = 0;
     bool _ok = false;
     bool _laserOk = false;
+    bool _writeSettings = false;
     float _outputPower = -1;
     float _pump1Current = -1;
     float _pump2Current = -1;

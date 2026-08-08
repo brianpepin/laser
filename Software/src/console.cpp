@@ -3,7 +3,6 @@
 #include "console.h"
 
 // todo diag
-#include "XRA1402.h"
 #include "ADC104S021.h"
 #include "config.h"
 #include "power.h"
@@ -25,15 +24,27 @@ namespace Console
         void usage() override;
     };
 
+    class DiagnosticCommands : public Parser
+    {
+    public:
+        bool parse(const char* cmd) override;
+        void usage() override;
+    };
+
     namespace Cmds
     {
         static GlobalCommands global;
+        static DiagnosticCommands diag;
     }
 
     constexpr size_t _bufferMax = 10;
     char _buffer[_bufferMax + 1];
     uint8_t _bufferLen;
     static Parser* _parser = &Cmds::global;
+
+    #ifdef ENABLE_SIMULATION
+    SystemStatus _simulatedStatus{};
+    #endif
     
     void printTecChannelStatus(const Tec::ChannelStatus& tecStatus)
     {
@@ -91,7 +102,7 @@ namespace Console
         Serial.println();
         Serial.println(F("-----"));
         Serial.print(F("Output Power : "));
-        Serial.print(status.outputPower);
+        Serial.print(status.power.laserOutputPower);
         Serial.println('W');
         Serial.print(F("Die Temp     : "));
         Serial.print(status.laser.dieTemp);
@@ -121,48 +132,69 @@ namespace Console
         Serial.println(F("Battery"));
         Serial.println(F("-------"));
         Serial.print(F("Voltage      : "));
-        Serial.print(status.battery.voltage);
+        Serial.print(status.power.batteryVoltage);
         Serial.print('V');
-        if (status.battery.charging) Serial.print(F(" [Charging]"));
+        if (status.power.batteryCharging) Serial.print(F(" [Charging]"));
         Serial.println();
     }
 
     void printAdcLine(const __FlashStringHelper* text, int16_t value, float fvalue)
     {
-        Serial.print(text);
-        Serial.print(fvalue);
-        Serial.print(F(" ("));
+        size_t len;
+        len = Serial.print(text);
+        for (size_t ch = 0; ch < 18 - len; ch++) Serial.print(' ');
+        len = Serial.print(fvalue);
+        for (size_t ch = 0; ch < 10 - len; ch++) Serial.print(' ');
+        Serial.print(F("("));
         Serial.print(value);
         Serial.println(F(")"));
     }
 
     void printAdc()
     {
-        ADC104S021 adc(Pins::Power::Cs);
-        Power power;
-        int16_t value;
+        auto& status = Management::getSystemStatus();
+        uint16_t value;
         float fvalue;
 
         Serial.println();
 
-        value = adc.readValue(0);
-        bool charge = power.isBatteryCharging();
+        value = status.power.adc.batteryCharging;
+        bool charge = status.power.batteryCharging;
         printAdcLine(F("Battery Charging: "), value, charge ? 1.0 : 0.0);
 
-        value = adc.readValue(1);
-        fvalue = power.getBatteryVoltage();
+        value = status.power.adc.batteryVoltage;
+        fvalue = status.power.batteryVoltage;
         printAdcLine(F("Battery Voltage: "), value, fvalue);
 
-        value = adc.readValue(2);
-        fvalue = power.getBatteryCurrent();
+        value = status.power.adc.batteryCurrent;
+        fvalue = status.power.batteryCurrent;
         printAdcLine(F("Battery Current: "), value, fvalue);
 
-        value = adc.readValue(3);
-        fvalue = power.getLaserOutputPower();
+        value = status.power.adc.laserOutputPower;
+        fvalue = status.power.laserOutputPower;
         printAdcLine(F("Laser Output: "), value, fvalue);
 
         Serial.println();
     }
+
+    #ifdef ENABLE_SIMULATION
+    void initializeSimulation()
+    {
+        _simulatedStatus.laser.ok = true;
+
+        _simulatedStatus.power.batteryCharging = false;
+        _simulatedStatus.power.batteryCurrent = 0;
+        _simulatedStatus.power.batteryVoltage = 8.4;
+        _simulatedStatus.power.laserOutputPower = 0;
+
+        _simulatedStatus.power.adc.laserOutputPower = 512;
+
+        _simulatedStatus.tec.ktp.temp = Defaults::Temperatures::Ktp;
+        _simulatedStatus.tec.pump1.temp = Defaults::Temperatures::Pump1;
+        _simulatedStatus.tec.pump2.temp = Defaults::Temperatures::Pump2;
+        _simulatedStatus.tec.vanadate.temp = Defaults::Temperatures::Vanadate;
+    }
+    #endif
 
     bool GlobalCommands::parse(const char* cmd)
     {
@@ -172,12 +204,13 @@ namespace Console
                 printStatus();
                 return true;
 
-            case 'a':
-                printAdc();
-                return true;
-
             case 'f':
                 input.toggleFireSwitch();
+                return true;
+
+            case 'd':
+                _parser = &Cmds::diag;
+                _parser->usage();
                 return true;
         }
 
@@ -186,16 +219,65 @@ namespace Console
 
     void GlobalCommands::usage()
     {
-        Serial.println(F("\ns : Status"));
+        Serial.println(F("\nMain Menu\n"));
+        Serial.println(F("s : Status Report"));
+        Serial.println(F("f : Toggle fire switch"));
+        Serial.println(F("d : Enter diagnostic menu\n"));
+    }
+
+    bool DiagnosticCommands::parse(const char* cmd)
+    {
+        switch (*cmd)
+        {
+            #ifdef ENABLE_SIMULATION
+            case 's':
+                initializeSimulation();
+                Management::setSimulation(&_simulatedStatus);
+                Serial.println(F("Started simulation"));
+                return true;
+
+            case 'e':
+                Management::setSimulation(nullptr);
+                Serial.println(F("Ended simulation"));
+                return true;
+            #endif
+     
+            case 'a':
+                printAdc();
+                return true;
+
+            case 'r':
+                Management::restart();
+                Serial.println(F("*** Controller Reset ***"));
+                return true;
+
+            case 'x':
+                _parser = &Cmds::global;
+                _parser->usage();
+                return true;
+        }
+
+        return false;
+    }
+
+    void DiagnosticCommands::usage()
+    {
+        Serial.println(F("\nDiagnostic Menu\n"));
+
+        #ifdef ENABLE_SIMULATION
+        Serial.println(F("s : Enter simulation mode"));
+        Serial.println(F("e : End simulation mode"));
+        #endif
+
         Serial.println(F("a : Read ADC values"));
-        Serial.println(F("f : Toggle fire switch\n"));
+        Serial.println(F("r : Reset"));
+        Serial.println(F("x : Exit menu\n"));
     }
 
     void parse(const char* cmd)
     {
         if (*cmd == '\0')
         {
-            _parser = &Cmds::global;
             _parser->usage();
             return;
         }
@@ -216,8 +298,6 @@ namespace Console
         {
             _parser->parse(cmd);
         }
-
-        _parser->usage();
     }
 
     void tick()

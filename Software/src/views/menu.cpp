@@ -3,31 +3,43 @@
 #include "macros.h"
 #include "views/menu.h"
 
+template<class T>
+static T clamp(T value, T low, T high)
+{
+    if (value < low) return low;
+    if (value > high) return high;
+    return value;
+}
+
 void MenuView::clearMenu()
 {
     for (size_t idx = 0; idx < ARRAYSIZE(_items); idx++)
     {
         auto& item = _items[idx];
         item.text = nullptr;
-        item.value = nullptr;
+        memset(item.values, 0, sizeof(Value*) * c_maxItemValues);
     }
 
     _title = nullptr;
     _sel = 0;
-    _valueSelect = false;
-    _fireChannel = Tec::Channel::Ktp; // disable firing
+    _valueSelect = 0;
+    _fireChannel = Tec::Channel::Vanadate; // disable firing
     _lastFireChannel = _fireChannel;
     _itemCount = 0;
     _buttonIndex = 0xff;
+
+    led.enableFiring(false);
 }
 
-void MenuView::addItem(const __FlashStringHelper* text, Cmd cmd, Value* value)
+void MenuView::addItem(const __FlashStringHelper* text, Cmd cmd, Value* value1, Value* value2, Value* value3)
 {
     auto& item = _items[_itemCount];
     item.text = text;
     item.cmd = cmd;
-    item.value = value;
     item.width = 0;
+    item.values[0] = value1;
+    item.values[1] = value2;
+    item.values[2] = value3;
 
     _itemCount++;
     _update = true;
@@ -38,8 +50,8 @@ void MenuView::addButton(const __FlashStringHelper* text, Cmd cmd, uint8_t width
     auto& item = _items[_itemCount];
     item.text = text;
     item.cmd = cmd;
-    item.value = nullptr;
     item.width = width;
+    memset(item.values, 0, sizeof(Value*) * c_maxItemValues);
 
     if (_buttonIndex == 0xff)
     {
@@ -63,12 +75,13 @@ void MenuView::mainMenu()
 
 void MenuView::alignmentMenu()
 {
+    clearMenu();
+
     // laser firing will be hot here, so reset input state.
     input.reset();
+    led.enableFiring(true);
     _fireChannel = Tec::Channel::Pump1;
     _lastFireChannel = _fireChannel;
-
-    clearMenu();
     
     size_t idx = 0;
     _values[idx].init(ValueType::AlignCurrent, Tec::Channel::Pump1);
@@ -77,7 +90,32 @@ void MenuView::alignmentMenu()
     addItem(F("PUMP 2 DRIVE CURRENT"), Cmd::ValueSelect, &_values[idx++]);
     _values[idx].init(&_fireChannel);
     addItem(F("PUMP SELECT"), Cmd::ValueSelect, &_values[idx++]);
-    addButton(F("EXIT"), Cmd::Exit, 6);
+    addButton(F("EXIT"), Cmd::CalibrateAlignExit, 6);
+}
+
+void MenuView::adcMenu()
+{
+    clearMenu();
+
+    // laser firing will be hot here, so reset input state.
+    input.reset();
+    led.enableFiring(true);
+    _fireChannel = Tec::Channel::Ktp;
+    _lastFireChannel = _fireChannel;
+
+    _setPoints[0] = settings.calibration.power;
+
+    auto* calPoint = &settings.calibration.power;
+    auto* setPoint = &_setPoints[0];
+    
+    _values[0].init(ValueType::Current, calPoint, setPoint);
+    _values[1].init(ValueType::Power, calPoint, setPoint);
+    _values[2].init(ValueType::Adc, calPoint, setPoint);
+
+    addItem(F("OUTPUT POWER"), Cmd::ValueSelect, &_values[0], &_values[1], &_values[2]);
+
+    addButton(F("SAVE"), Cmd::CalibrateSave, 4);
+    addButton(F("CANCEL"), Cmd::CalibrateCancel, 6);
 }
 
 void MenuView::calibrationMenu()
@@ -88,16 +126,19 @@ void MenuView::calibrationMenu()
     addButton(F("VANADATE"), Cmd::CalibrateVanadate, 10);
     addButton(F("KTP"), Cmd::CalibrateKtp, 10);
     addButton(F("ALIGN"), Cmd::CalibrateAlign, 10);
+    addButton(F("ADC"), Cmd::CalibrateAdc, 10);
     addButton(F("EXIT"), Cmd::Exit, 10);
 }
 
 void MenuView::calibrateItem(const __FlashStringHelper* title, Tec::Channel channel)
 {
+    clearMenu();
+
     // laser firing will be hot here, so reset input state.
     input.reset();
+    led.enableFiring(true);
 
     size_t idx = 0;
-    clearMenu();
     _title = title;
     _fireChannel = channel;
     _lastFireChannel = _fireChannel;
@@ -137,6 +178,7 @@ void MenuView::processCmd(Cmd cmd, View** newView)
     {
         default:
         case Cmd::Exit:
+            settings.save();
             *newView = _prevView;
             break;
 
@@ -147,6 +189,10 @@ void MenuView::processCmd(Cmd cmd, View** newView)
 
         case Cmd::CalibrateAlign:
             alignmentMenu();
+            break;
+
+        case Cmd::CalibrateAdc:
+            adcMenu();
             break;
 
         case Cmd::CalibratePump1:
@@ -171,6 +217,10 @@ void MenuView::processCmd(Cmd cmd, View** newView)
             calibrationMenu();
             break;
 
+        case Cmd::CalibrateAlignExit:
+            calibrationMenu();
+            break;
+
         case Cmd::CalibrateSave:
             settings.save();
             Management::restart();
@@ -178,10 +228,18 @@ void MenuView::processCmd(Cmd cmd, View** newView)
             break;
 
         case Cmd::ValueSelect:
-            if (_items[_sel].value != nullptr)
+            if (_items[_sel].values[0] != nullptr)
             {
-                _valueSelect = true;
-                _update = true;
+                for (uint8_t idx = 0; idx < c_maxItemValues; idx++)
+                {
+                    if (_items[_sel].values[idx] != nullptr &&
+                        !_items[_sel].values[idx]->readOnly())
+                    {
+                        _valueSelect = idx + 1;
+                        _update = true;
+                        break;
+                    }
+                }
             }
             break;
     }
@@ -198,9 +256,9 @@ bool MenuView::tick(View** newView)
     int8_t dir = input.getEncoderDirection();
     if (dir != 0)
     {
-        if (_valueSelect)
+        if (_valueSelect != 0)
         {
-            _items[_sel].value->adjust(dir);
+            _items[_sel].values[_valueSelect - 1]->adjust(dir, input.getEncoderVelocity());
         }
         else
         {
@@ -221,10 +279,24 @@ bool MenuView::tick(View** newView)
 
     if (input.getEncoderSelect())
     {
-        if (_valueSelect)
+        if (_valueSelect != 0)
         {
-            _valueSelect = false;
-            laser.enable(false);
+            uint8_t newValueSelect = 0;
+            for (uint8_t idx = _valueSelect; idx < c_maxItemValues; idx++)
+            {
+                if (_items[_sel].values[idx] != nullptr &&
+                    !_items[_sel].values[idx]->readOnly())
+                {
+                    newValueSelect = idx + 1;
+                    break;
+                }
+            }
+
+            _valueSelect =  newValueSelect;
+            if (_valueSelect == 0)
+            {
+                laser.enable(false);
+            }
         }
         else
         {
@@ -252,10 +324,24 @@ bool MenuView::tick(View** newView)
 
             default:
                 laser.enable(false);
+                break;
         }
     }
 
-    return false;
+    bool update = false;
+
+    for (uint8_t item = 0; item < _itemCount; item++)
+    {
+        for (uint8_t value = 0; value < c_maxItemValues; value++)
+        {
+            if (_items[item].values[value] != nullptr)
+            {
+                update |= _items[item].values[value]->tick();
+            }
+        }
+    }
+
+    return update;
 }
 
 void MenuView::render()
@@ -281,12 +367,25 @@ void MenuView::render()
     u8g2_uint_t w = display.getDisplayWidth() - 30;
     u8g2_uint_t x = 0;
 
+    // If we have a menu item with more than one value,
+    // reserve more space for values.
+    u8g2_uint_t divisor = 2;
+
+    for (int8_t item = 0; item < _itemCount; item++)
+    {
+        if (_items[item].values[1] != nullptr)
+        {
+            divisor = 3;
+            break;
+        }
+    }
+
     for (int8_t idx = 0; idx < _itemCount; idx++)
     {
         if (idx == _buttonIndex && idx != 0)
         {
             y += 2 * margin;
-            x = w / 2;
+            x = w / divisor;
         }
 
         if (_items[idx].width != 0)
@@ -297,22 +396,35 @@ void MenuView::render()
         display.setCursor(x + margin, y + h - margin);
         display.print(_items[idx].text);
 
-        if (_items[idx].value != nullptr)
+        display.setCursor(w / divisor + margin, y + h - margin);
+        u8g2_uint_t valueWidth = (w - (w / divisor)) / c_maxItemValues;
+
+        for (int valueIdx = 0; valueIdx < c_maxItemValues; valueIdx++)
         {
-            display.setCursor(w / 2 + margin, y + h - margin);
-            _items[idx].value->draw();
+            Value* value = _items[idx].values[valueIdx];
+
+            if (value == nullptr)
+            {
+                break;
+            }
+
+            u8g2_uint_t valueStartX, valueEndX;
+            valueStartX = display.getCursorX();
+            value->draw();
+            valueEndX = display.getCursorX();
+
+            if (_sel == idx && (valueIdx + 1) == _valueSelect)
+            {
+                display.drawHLine(valueStartX, y + h - 1, valueEndX - valueStartX);
+            }
+
+            //  Add some margin before next value
+            display.setCursor(valueStartX + valueWidth, y + h - margin);
         }
 
-        if (_sel == idx)
+        if (_sel == idx && _valueSelect == 0)
         {
-            if (_valueSelect)
-            {
-                display.drawHLine(w / 2, y + h - 1, w / 2);
-            }
-            else
-            {
-                display.drawFrame(x, y, w, h);
-            }
+            display.drawFrame(x, y, w, h);
         }
 
         if (idx >= _buttonIndex && (_buttonIndex != 0 || (idx % 2) == 0))
@@ -340,7 +452,7 @@ void MenuView::Value::init(ValueType type, Tec::Channel channel)
 void MenuView::Value::init(Tec::Channel* fireChannel)
 {
     _type = ValueType::Current;
-    _channel = Tec::Channel::Pump1;;
+    _channel = Tec::Channel::Pump1;
     _fireChannel = fireChannel;
     _displayMode = nullptr;
     _value = 0;
@@ -350,10 +462,26 @@ void MenuView::Value::init(Tec::Channel* fireChannel)
 void MenuView::Value::init(DisplayMode* displayMode)
 {
     _type = ValueType::Current;
-    _channel = Tec::Channel::Pump1;;
+    _channel = Tec::Channel::Pump1;
     _fireChannel = nullptr;
     _displayMode = displayMode;
     _value = 0;
+}
+
+void MenuView::Value::init(ValueType type, Settings::Calibration::Point* calibrationPoint, Settings::Calibration::Point* setPoint)
+{
+    _type = type;
+    _channel = Tec::Channel::Ktp;
+    _fireChannel = nullptr;
+    _displayMode = nullptr;
+    _calibrationPoint = calibrationPoint;
+    _setPoint = setPoint;
+    _value = 0;
+
+    if (_type == ValueType::Current)
+    {
+        laser.setCurrent(_setPoint->input);
+    }
 }
 
 void MenuView::Value::draw()
@@ -381,15 +509,68 @@ void MenuView::Value::draw()
         }
         display.print(s);
     }
+    else if (_type == ValueType::Adc)
+    {
+        display.print("(");
+        display.print(_setPoint->adc);
+        display.print(")");
+    }
     else
     {
         float value = get();
-        display.print(value, 1);
-        display.print(_type == ValueType::Temp ? 'C' : 'A');
+        char* suffix;
+        int sig = 1;
+
+        switch (_type)
+        {
+            case ValueType::Temp:
+                suffix = "C";
+                break;
+
+            case ValueType::Power:
+                suffix = "W";
+                sig = 3;
+                if (value < 1)
+                {
+                    value *= 1000;
+                    sig = 0;
+                    suffix = "mW";
+                }
+                break;
+
+            default:
+                suffix = "A";
+        }
+
+        display.print(value, sig);
+        display.print(suffix);
     }
 }
 
-void MenuView::Value::adjust(int8_t dir)
+bool MenuView::Value::tick()
+{
+    if (_calibrationPoint != nullptr && laser.getEnabled())
+    {
+        switch (_type)
+        {
+            case ValueType::Current:
+                _setPoint->input = laser.getCurrent();
+                return true;
+
+            case ValueType::Adc:
+                _setPoint->adc = Management::getSystemStatus().power.adc.laserOutputPower;
+                return true;
+
+            case ValueType::Power:
+                _setPoint->output = Management::getSystemStatus().power.laserOutputPower;
+                return true;
+        }
+    }
+
+    return false;
+}
+
+void MenuView::Value::adjust(int8_t dir, uint8_t velocity)
 {
     if (_fireChannel)
     {
@@ -405,22 +586,25 @@ void MenuView::Value::adjust(int8_t dir)
         else if (_value < 0) _value = 0;
         updateState();
     }
-    else if (_channel == Tec::Channel::Ktp && _type == ValueType::Temp)
-    {
-        // KTP temp needs finer control of temperature
-        float value = get();
-        float adj = dir;
-        adj /= 10.0;
-        value += adj;
-        set(value);
-    }
     else
     {
-        float value = get();
-        float adj = dir;
-        adj /= 2.0;
-        value += adj;
-        set(value);
+        float delta;
+        switch (_type)
+        {
+            case ValueType::Power:
+                delta = .001 * dir;
+                if (velocity > 5)
+                {
+                    delta *= (velocity * 10);
+                }
+                break;
+
+            default:
+                delta = .1 * dir * velocity;
+                break;
+        }
+
+        set(get() + delta);
     }
 }
 
@@ -480,9 +664,15 @@ float MenuView::Value::get()
                 default:
                     break;
                 case ValueType::Current:
+                    if (_setPoint != nullptr)
+                    {
+                        return _setPoint->input;
+                    }
                     return laser.getCurrent();
                 case ValueType::Temp:
                     return settings.temps.ktp;
+                case ValueType::Power:
+                    return _setPoint->output;
             }
             break;
     }
@@ -565,10 +755,26 @@ void MenuView::Value::set(float value)
                     break;
                 case ValueType::Current:
                     laser.setCurrent(value);
+                    if (_setPoint != nullptr)
+                    {
+                        _setPoint->input = laser.getCurrent();
+
+                        if (!laser.getEnabled())
+                        {
+                            _setPoint->adc = 0;
+                        }
+                    }
                     break;
                 case ValueType::Temp:
                     tec.setTemp(_channel, value);
                     settings.temps.ktp = value;
+                    break;
+                case ValueType::Power:
+                    if (_setPoint->adc != 0)
+                    {
+                        _setPoint->output = clamp<float>(value, .001, 40.0);
+                        *_calibrationPoint = *_setPoint;
+                    }
                     break;
             }
             break;

@@ -38,15 +38,34 @@ void Laser::reset()
     _millis = 0;
 }
 
+#ifdef ENABLE_SIMULATION
+void Laser::setSimulation(const Status* simulatedStatus)
+{
+    _simulatedStatus = simulatedStatus;
+}
+#endif
+
 void Laser::error()
 {
-    Serial.println(F("\n** MAX20096 COM Error. Resetting. **\n"));
-    _state.once = false;
-    reset();
+    #ifdef ENABLE_SIMULATION
+    if (_simulatedStatus == nullptr)
+    #endif
+    {
+        Serial.println(F("\n** MAX20096 COM Error. Resetting. **\n"));
+        _state.once = false;
+        reset();
+    }
 }
 
 Laser::Status Laser::getStatus()
 {
+    #ifdef ENABLE_SIMULATION
+    if (_simulatedStatus != nullptr)
+    {
+        return *_simulatedStatus;
+    }
+    #endif
+
     MAX20096::Status driverStatus = _driver.getStatus();
     Laser::Status status;
     *((MAX20096::Status*)&status) = driverStatus;
@@ -137,6 +156,8 @@ void Laser::enable(bool enable, Channel channel)
         return;
     }
 
+    bool wasEnabled = false;
+
     // Disable immediately.  Enable happens through tick
     // to ramp current up.
 
@@ -148,12 +169,19 @@ void Laser::enable(bool enable, Channel channel)
 
     for (uint8_t idx = 0; idx < 2; idx++)
     {
+        wasEnabled |= _driver.getEnabled(idx);
+
         if (!_driver.setCurrent(idx, 0) ||
             !_driver.setEnabled(idx, enable && changeChannel[idx]))
         {
             error();
         }
         _channelState[idx].actual = 0;
+    }
+
+    if (wasEnabled != enable)
+    {
+        Serial.printf("*** Laser %s ***\r\n", enable ? "ON" : "OFF");
     }
 }
 

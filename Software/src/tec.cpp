@@ -4,7 +4,7 @@
 // Reference range TEC board is using
 
 constexpr uint16_t DMAX = 1024;
-constexpr double VREF = 2.5;
+constexpr double ADC_VREF = 2.5;
 constexpr double VCC  = 3.2;
 
 constexpr double ADC_SLOPE =  -38.69341804089662847147074037052;
@@ -25,9 +25,9 @@ static uint16_t convertTemp(float celcius)
 {
     double voltage = celcius * DAC_SLOPE + DAC_OFFSET;
     if (voltage < 0) voltage = 0;
-    if (voltage > VREF) voltage = VREF;
+    if (voltage > ADC_VREF) voltage = ADC_VREF;
 
-    uint16_t value = static_cast<uint16_t>(voltage * DMAX / VREF);
+    uint16_t value = static_cast<uint16_t>(voltage * DMAX / ADC_VREF);
     if (value >= DMAX) value = DMAX - 1;
 
     return value;
@@ -50,6 +50,13 @@ void Tec::enable(bool enable)
 {
     digitalWrite(Pins::Tec::Enable, enable ? HIGH : LOW);
 }
+
+#ifdef ENABLE_SIMULATION
+void Tec::setSimulation(const Status* simulatedStatus)
+{
+    _simulatedStatus = simulatedStatus;
+}
+#endif
 
 float Tec::readTemp(Channel channel)
 {
@@ -81,6 +88,13 @@ Tec::Status Tec::getStatus()
 {
     Status status;
 
+    #ifdef ENABLE_SIMULATION
+    if (_simulatedStatus != nullptr)
+    {
+        status = *_simulatedStatus;
+    }
+    #endif
+
     ChannelStatus* ch[] =
     {
         &status.pump1,
@@ -93,9 +107,19 @@ Tec::Status Tec::getStatus()
 
     for (uint8_t i = 0; i < 4; i++)
     {
-        float temp = convertTemp(_adc.readValue(i));
-        ch[i]->ok = _targets[i].inTolerance(temp);
-        ch[i]->temp = _targets[i].offset(temp);
+        #ifdef ENABLE_SIMULATION
+        if (_simulatedStatus != nullptr)
+        {
+            ch[i]->ok = _targets[i].inTolerance(ch[i]->temp);
+        }
+        else
+        #endif
+        {
+            float temp = convertTemp(_adc.readValue(i));
+            temp = _targets[i].offset(temp);
+            ch[i]->ok = _targets[i].inTolerance(temp);
+            ch[i]->temp = temp;
+        }
         status.ok &= ch[i]->ok;
     }
 
@@ -143,12 +167,12 @@ bool Tec::Target::inTolerance(float actualTemp)
             break;
     }
 
-    if (_out && abs(_setTemp - offset(actualTemp)) < (tolerance / 2.0))
+    if (_out && abs(_setTemp - actualTemp) < (tolerance / 2.0))
     {
         _out = false;
     }
 
-    bool inBounds = (abs(_setTemp - offset(actualTemp)) < tolerance);
+    bool inBounds = (abs(_setTemp - actualTemp) < tolerance);
     if (!inBounds)
     {
         _out = true;

@@ -39,6 +39,10 @@ public:
 
     Status getStatus();
 
+    #ifdef ENABLE_SIMULATION
+    void setSimulation(const Status* simulatedStatus);
+    #endif
+
 private:
 
     class Target
@@ -48,7 +52,6 @@ private:
         void recalibrate(float setTemp);
         bool inTolerance(float actualTemp);
         float offset(float temp);
-
 
     private:
         Channel _channel;
@@ -60,4 +63,8 @@ private:
     DAC108S085 _dac;
     ADC104S021 _adc;
     Target _targets[4];
+
+    #ifdef ENABLE_SIMULATION
+    const Status* _simulatedStatus = nullptr;
+    #endif
 };

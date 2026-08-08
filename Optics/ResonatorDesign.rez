@@ -6,48 +6,268 @@
         }
     },
     "custom_params": {
+        "Angle_KTP": {
+            "descr": "",
+            "dim": "angular",
+            "error": "",
+            "expr": "8.5",
+            "unit": "deg",
+            "value": 8.5
+        },
+        "Angle_QS": {
+            "descr": "",
+            "dim": "angular",
+            "error": "",
+            "expr": "8.5",
+            "unit": "deg",
+            "value": 8.5
+        },
+        "Arm_Gain": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 50
+        },
+        "Arm_Gain_QS": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 173.75142388753002
+        },
+        "Arm_KTP": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 109.00000000000001
+        },
+        "Arm_KTP_Gain": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 173.75142388753002
+        },
+        "Arm_QS": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 49
+        },
+        "Arm_Width": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 50.8
+        },
+        "Cavity_Length": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 555.5028477750601
+        },
+        "Gain_FL": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "cm",
+            "value": 100
+        },
+        "Gain_L": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 12
+        },
+        "Gain_n": {
+            "descr": "",
+            "dim": "none",
+            "error": "",
+            "expr": "",
+            "unit": "none",
+            "value": 1.9573
+        },
+        "KTP_Confocal": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 9
+        },
+        "KTP_L": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 5
+        },
+        "KTP_Offset": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 3
+        },
+        "KTP_n": {
+            "descr": "",
+            "dim": "none",
+            "error": "",
+            "expr": "",
+            "unit": "none",
+            "value": 1.0085
+        },
+        "M1_ROC": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 100
+        },
+        "M2_ROC": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 200
+        },
+        "M5_ROC": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "100",
+            "unit": "mm",
+            "value": 100
+        },
+        "QS_Confocal": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": -1
+        },
+        "QS_FL": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "cm",
+            "value": 197
+        },
+        "QS_L": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 1.8
+        },
+        "QS_Offset": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 3
+        },
+        "QS_n": {
+            "descr": "",
+            "dim": "none",
+            "error": "",
+            "expr": "",
+            "unit": "none",
+            "value": 1.82
+        },
+        "d_gain_m4": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 19.000000000000004
+        },
+        "d_ktp_m2": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 101
+        },
+        "d_m1_ktp": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 3
+        },
+        "d_m2_m3": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 173.75142388753002
+        },
+        "d_m3_gain": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 19.000000000000004
+        },
+        "d_m4_m5": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 173.75142388753002
+        },
+        "d_m5_qs": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 44.199999999999996
+        },
+        "d_qs_m6": {
+            "descr": "",
+            "dim": "linear",
+            "error": "",
+            "expr": "",
+            "unit": "mm",
+            "value": 3
+        }
     },
     "elements": [
         {
             "is_disabled": false,
-            "label": "HR1",
-            "layout_draw_narrow": false,
-            "layout_show_label": true,
-            "params": {
-                "Alpha": {
-                    "unit": "deg",
-                    "value": 0
-                },
-                "R": {
-                    "unit": "mm",
-                    "value": 400
-                }
-            },
-            "title": "",
-            "type": "ElemCurveMirror"
-        },
-        {
-            "is_disabled": false,
-            "label": "d1",
-            "layout_draw_narrow": false,
-            "layout_show_label": true,
-            "params": {
-                "L": {
-                    "unit": "mm",
-                    "value": 55
-                },
-                "n": {
-                    "unit": "none",
-                    "value": 1
-                }
-            },
-            "title": "",
-            "type": "ElemEmptyRange"
-        },
-        {
-            "is_disabled": false,
-            "label": "F1",
-            "layout_draw_narrow": false,
+            "label": "M1",
+            "layout_draw_alt": false,
             "layout_show_label": true,
             "params": {
             },
@@ -56,111 +276,19 @@
         },
         {
             "is_disabled": false,
-            "label": "d2",
-            "layout_draw_narrow": false,
+            "label": "d_m1_ktp",
+            "layout_draw_alt": false,
             "layout_show_label": true,
             "params": {
                 "L": {
+                    "error": "",
+                    "expr": "",
                     "unit": "mm",
-                    "value": 16.3
+                    "value": 3
                 },
                 "n": {
-                    "unit": "none",
-                    "value": 1
-                }
-            },
-            "title": "",
-            "type": "ElemEmptyRange"
-        },
-        {
-            "is_disabled": false,
-            "label": "VANADATE",
-            "layout_draw_narrow": false,
-            "layout_show_label": true,
-            "params": {
-                "F": {
-                    "unit": "cm",
-                    "value": 1000
-                },
-                "L": {
-                    "unit": "mm",
-                    "value": 10
-                },
-                "n": {
-                    "unit": "none",
-                    "value": 2.0027
-                }
-            },
-            "title": "",
-            "type": "ElemThermoLens"
-        },
-        {
-            "is_disabled": false,
-            "label": "d3",
-            "layout_draw_narrow": false,
-            "layout_show_label": true,
-            "params": {
-                "L": {
-                    "unit": "mm",
-                    "value": 16.3
-                },
-                "n": {
-                    "unit": "none",
-                    "value": 1
-                }
-            },
-            "title": "",
-            "type": "ElemEmptyRange"
-        },
-        {
-            "is_disabled": false,
-            "label": "F2",
-            "layout_draw_narrow": false,
-            "layout_show_label": true,
-            "params": {
-            },
-            "title": "",
-            "type": "ElemFlatMirror"
-        },
-        {
-            "is_disabled": false,
-            "label": "d4",
-            "layout_draw_narrow": false,
-            "layout_show_label": true,
-            "params": {
-                "L": {
-                    "unit": "mm",
-                    "value": 52
-                },
-                "n": {
-                    "unit": "none",
-                    "value": 1
-                }
-            },
-            "title": "",
-            "type": "ElemEmptyRange"
-        },
-        {
-            "is_disabled": false,
-            "label": "OC",
-            "layout_draw_narrow": false,
-            "layout_show_label": true,
-            "params": {
-            },
-            "title": "",
-            "type": "ElemFlatMirror"
-        },
-        {
-            "is_disabled": false,
-            "label": "d5",
-            "layout_draw_narrow": false,
-            "layout_show_label": true,
-            "params": {
-                "L": {
-                    "unit": "mm",
-                    "value": 67
-                },
-                "n": {
+                    "error": "",
+                    "expr": "",
                     "unit": "none",
                     "value": 1
                 }
@@ -171,16 +299,20 @@
         {
             "is_disabled": false,
             "label": "KTP",
-            "layout_draw_narrow": false,
+            "layout_draw_alt": false,
             "layout_show_label": true,
             "params": {
                 "L": {
+                    "error": "",
+                    "expr": "",
                     "unit": "mm",
-                    "value": 10
+                    "value": 5
                 },
                 "n": {
+                    "error": "",
+                    "expr": "",
                     "unit": "none",
-                    "value": 1.7404
+                    "value": 1.0085
                 }
             },
             "title": "",
@@ -188,15 +320,19 @@
         },
         {
             "is_disabled": false,
-            "label": "d6",
-            "layout_draw_narrow": false,
+            "label": "d_ktp_m2",
+            "layout_draw_alt": false,
             "layout_show_label": true,
             "params": {
                 "L": {
+                    "error": "",
+                    "expr": "",
                     "unit": "mm",
-                    "value": 5
+                    "value": 101
                 },
                 "n": {
+                    "error": "",
+                    "expr": "",
                     "unit": "none",
                     "value": 1
                 }
@@ -206,8 +342,270 @@
         },
         {
             "is_disabled": false,
-            "label": "HR2",
-            "layout_draw_narrow": false,
+            "label": "M2",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+                "Alpha": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "deg",
+                    "value": 8.5
+                },
+                "R": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "mm",
+                    "value": 200
+                }
+            },
+            "title": "",
+            "type": "ElemCurveMirror"
+        },
+        {
+            "is_disabled": false,
+            "label": "d_m2_m3",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+                "L": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "mm",
+                    "value": 173.75142388753002
+                },
+                "n": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "none",
+                    "value": 1
+                }
+            },
+            "title": "",
+            "type": "ElemEmptyRange"
+        },
+        {
+            "is_disabled": false,
+            "label": "M3",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+            },
+            "title": "",
+            "type": "ElemFlatMirror"
+        },
+        {
+            "is_disabled": false,
+            "label": "d_m3_gain",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+                "L": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "mm",
+                    "value": 19.000000000000004
+                },
+                "n": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "none",
+                    "value": 1
+                }
+            },
+            "title": "",
+            "type": "ElemEmptyRange"
+        },
+        {
+            "is_disabled": false,
+            "label": "Gain",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+                "F": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "cm",
+                    "value": 100
+                },
+                "L": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "mm",
+                    "value": 12
+                },
+                "n": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "none",
+                    "value": 1.9573
+                }
+            },
+            "title": "",
+            "type": "ElemThermoLens"
+        },
+        {
+            "is_disabled": false,
+            "label": "d_gain_m4",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+                "L": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "mm",
+                    "value": 19.000000000000004
+                },
+                "n": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "none",
+                    "value": 1
+                }
+            },
+            "title": "",
+            "type": "ElemEmptyRange"
+        },
+        {
+            "is_disabled": false,
+            "label": "M4",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+            },
+            "title": "",
+            "type": "ElemFlatMirror"
+        },
+        {
+            "is_disabled": false,
+            "label": "d_m4_m5",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+                "L": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "mm",
+                    "value": 173.75142388753002
+                },
+                "n": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "none",
+                    "value": 1
+                }
+            },
+            "title": "",
+            "type": "ElemEmptyRange"
+        },
+        {
+            "is_disabled": true,
+            "label": "M5b",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+            },
+            "title": "",
+            "type": "ElemFlatMirror"
+        },
+        {
+            "is_disabled": false,
+            "label": "M5",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+                "Alpha": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "deg",
+                    "value": 8.5
+                },
+                "R": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "mm",
+                    "value": 100
+                }
+            },
+            "title": "",
+            "type": "ElemCurveMirror"
+        },
+        {
+            "is_disabled": false,
+            "label": "d_m5_qs",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+                "L": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "mm",
+                    "value": 44.199999999999996
+                },
+                "n": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "none",
+                    "value": 1
+                }
+            },
+            "title": "",
+            "type": "ElemEmptyRange"
+        },
+        {
+            "is_disabled": false,
+            "label": "QS",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+                "F": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "cm",
+                    "value": 197
+                },
+                "L": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "mm",
+                    "value": 1.8
+                },
+                "n": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "none",
+                    "value": 1.82
+                }
+            },
+            "title": "",
+            "type": "ElemThermoLens"
+        },
+        {
+            "is_disabled": false,
+            "label": "d_qs_m6",
+            "layout_draw_alt": false,
+            "layout_show_label": true,
+            "params": {
+                "L": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "mm",
+                    "value": 3
+                },
+                "n": {
+                    "error": "",
+                    "expr": "",
+                    "unit": "none",
+                    "value": 1
+                }
+            },
+            "title": "",
+            "type": "ElemEmptyRange"
+        },
+        {
+            "is_disabled": false,
+            "label": "M6",
+            "layout_draw_alt": false,
             "layout_show_label": true,
             "params": {
             },
@@ -216,20 +614,225 @@
         }
     ],
     "formulas": [
+        {
+            "code": "Arm_Width / sin(2 * Angle_QS)",
+            "param_deps": [
+                "Arm_Width",
+                "Angle_QS"
+            ],
+            "target_param": "Arm_Gain_QS"
+        },
+        {
+            "code": "M2_ROC / 2 + KTP_Confocal",
+            "param_deps": [
+                "M2_ROC",
+                "KTP_Confocal"
+            ],
+            "target_param": "Arm_KTP"
+        },
+        {
+            "code": "Arm_Width / sin(2 * Angle_KTP)",
+            "param_deps": [
+                "Angle_KTP",
+                "Arm_Width"
+            ],
+            "target_param": "Arm_KTP_Gain"
+        },
+        {
+            "code": "(M5_ROC / 2) + QS_Confocal",
+            "param_deps": [
+                "M5_ROC",
+                "QS_Confocal"
+            ],
+            "target_param": "Arm_QS"
+        },
+        {
+            "code": "Arm_KTP + Arm_KTP_Gain + Arm_Gain + Arm_Gain_QS + Arm_QS",
+            "param_deps": [
+                "Arm_Gain",
+                "Arm_Gain_QS",
+                "Arm_KTP",
+                "Arm_KTP_Gain",
+                "Arm_QS"
+            ],
+            "target_param": "Cavity_Length"
+        },
+        {
+            "code": "QS_Offset",
+            "param_deps": [
+                "QS_Offset"
+            ],
+            "target_param": "d_qs_m6"
+        },
+        {
+            "code": "(Arm_Gain - Gain_L) / 2",
+            "param_deps": [
+                "Arm_Gain",
+                "Gain_L"
+            ],
+            "target_param": "d_gain_m4"
+        },
+        {
+            "code": "Arm_KTP - KTP_L - KTP_Offset",
+            "param_deps": [
+                "Arm_KTP",
+                "KTP_L",
+                "KTP_Offset"
+            ],
+            "target_param": "d_ktp_m2"
+        },
+        {
+            "code": "KTP_Offset",
+            "param_deps": [
+                "KTP_Offset"
+            ],
+            "target_param": "d_m1_ktp"
+        },
+        {
+            "code": "Arm_KTP_Gain",
+            "param_deps": [
+                "Arm_KTP_Gain"
+            ],
+            "target_param": "d_m2_m3"
+        },
+        {
+            "code": "(Arm_Gain - Gain_L) / 2",
+            "param_deps": [
+                "Arm_Gain",
+                "Gain_L"
+            ],
+            "target_param": "d_m3_gain"
+        },
+        {
+            "code": "Arm_Gain_QS",
+            "param_deps": [
+                "Arm_Gain_QS"
+            ],
+            "target_param": "d_m4_m5"
+        },
+        {
+            "code": "Arm_QS - QS_L - QS_Offset",
+            "param_deps": [
+                "QS_L",
+                "QS_Offset",
+                "Arm_QS"
+            ],
+            "target_param": "d_m5_qs"
+        }
     ],
     "notes": "",
     "param_links": [
+        {
+            "source_param": "d_m1_ktp",
+            "target_elem": 1,
+            "target_param": "L"
+        },
+        {
+            "source_param": "KTP_L",
+            "target_elem": 2,
+            "target_param": "L"
+        },
+        {
+            "source_param": "KTP_n",
+            "target_elem": 2,
+            "target_param": "n"
+        },
+        {
+            "source_param": "d_ktp_m2",
+            "target_elem": 3,
+            "target_param": "L"
+        },
+        {
+            "source_param": "M2_ROC",
+            "target_elem": 4,
+            "target_param": "R"
+        },
+        {
+            "source_param": "Angle_KTP",
+            "target_elem": 4,
+            "target_param": "Alpha"
+        },
+        {
+            "source_param": "d_m2_m3",
+            "target_elem": 5,
+            "target_param": "L"
+        },
+        {
+            "source_param": "d_m3_gain",
+            "target_elem": 7,
+            "target_param": "L"
+        },
+        {
+            "source_param": "Gain_L",
+            "target_elem": 8,
+            "target_param": "L"
+        },
+        {
+            "source_param": "Gain_n",
+            "target_elem": 8,
+            "target_param": "n"
+        },
+        {
+            "source_param": "Gain_FL",
+            "target_elem": 8,
+            "target_param": "F"
+        },
+        {
+            "source_param": "d_gain_m4",
+            "target_elem": 9,
+            "target_param": "L"
+        },
+        {
+            "source_param": "d_m4_m5",
+            "target_elem": 11,
+            "target_param": "L"
+        },
+        {
+            "source_param": "Angle_QS",
+            "target_elem": 13,
+            "target_param": "Alpha"
+        },
+        {
+            "source_param": "d_m5_qs",
+            "target_elem": 14,
+            "target_param": "L"
+        },
+        {
+            "source_param": "QS_L",
+            "target_elem": 15,
+            "target_param": "L"
+        },
+        {
+            "source_param": "QS_n",
+            "target_elem": 15,
+            "target_param": "n"
+        },
+        {
+            "source_param": "QS_FL",
+            "target_elem": 15,
+            "target_param": "F"
+        },
+        {
+            "source_param": "d_qs_m6",
+            "target_elem": 16,
+            "target_param": "L"
+        },
+        {
+            "source_param": "M5_ROC",
+            "target_elem": 13,
+            "target_param": "R"
+        }
     ],
     "pumps": [
     ],
-    "schema_version": "2.0",
+    "schema_version": "2.1",
     "title": "",
     "trip_type": "SW",
     "windows": [
         {
             "function": {
                 "arg": {
-                    "element_index": 4,
+                    "element_index": 8,
                     "param": "F",
                     "range": {
                         "points": 100,
@@ -254,19 +857,240 @@
             "window": {
                 "cursor_enabled": true,
                 "cursor_mode": "Both",
+                "format": {
+                    "axis_x": {
+                        "grid_pen": {
+                            "color": "#c8c8c8",
+                            "style": 3,
+                            "width": 0
+                        },
+                        "grid_visible": true,
+                        "id": "6ac2e093eb934eceb84d04f4bee9808d",
+                        "labels_color": "#000000",
+                        "labels_font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 13,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "labels_inside": false,
+                        "labels_margin": 3,
+                        "labels_rotation": 0,
+                        "labels_visible": true,
+                        "number_format": "gb",
+                        "number_precision": 10,
+                        "offset": 0,
+                        "pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "reversed": false,
+                        "scale_log": false,
+                        "subgrid_pen": {
+                            "color": "#dcdcdc",
+                            "style": 3,
+                            "width": 0
+                        },
+                        "subgrid_visible": false,
+                        "subtick_len_in": 2,
+                        "subtick_len_out": 0,
+                        "subtick_pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "subtick_visible": true,
+                        "tick_count": 5,
+                        "tick_len_in": 5,
+                        "tick_len_out": 0,
+                        "tick_offset": 0,
+                        "tick_pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "tick_strategy": 0,
+                        "tick_visible": true,
+                        "title_color": "#000000",
+                        "title_font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 14,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "title_margin_in": 3,
+                        "title_margin_out": 5,
+                        "version": 1,
+                        "visible": true,
+                        "zero_pen": {
+                            "color": "#c8c8c8",
+                            "style": 1,
+                            "width": 0
+                        }
+                    },
+                    "axis_y": {
+                        "grid_pen": {
+                            "color": "#c8c8c8",
+                            "style": 3,
+                            "width": 0
+                        },
+                        "grid_visible": true,
+                        "id": "c002454ea2594be0bafa8953e58783db",
+                        "labels_color": "#000000",
+                        "labels_font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 13,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "labels_inside": false,
+                        "labels_margin": 5,
+                        "labels_rotation": 0,
+                        "labels_visible": true,
+                        "number_format": "gb",
+                        "number_precision": 10,
+                        "offset": 0,
+                        "pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "reversed": false,
+                        "scale_log": false,
+                        "subgrid_pen": {
+                            "color": "#dcdcdc",
+                            "style": 3,
+                            "width": 0
+                        },
+                        "subgrid_visible": false,
+                        "subtick_len_in": 2,
+                        "subtick_len_out": 0,
+                        "subtick_pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "subtick_visible": true,
+                        "tick_count": 5,
+                        "tick_len_in": 5,
+                        "tick_len_out": 0,
+                        "tick_offset": 0,
+                        "tick_pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "tick_strategy": 0,
+                        "tick_visible": true,
+                        "title_color": "#000000",
+                        "title_font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 14,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "title_margin_in": 10,
+                        "title_margin_out": 5,
+                        "version": 1,
+                        "visible": true,
+                        "zero_pen": {
+                            "color": "#c8c8c8",
+                            "style": 1,
+                            "width": 0
+                        }
+                    },
+                    "legend": {
+                        "back_color": "#ffffff",
+                        "border": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 13,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "icon_margin": 7,
+                        "icon_size": {
+                            "height": 18,
+                            "width": 32
+                        },
+                        "location": 34,
+                        "margins": {
+                            "bottom": 12,
+                            "left": 12,
+                            "right": 12,
+                            "top": 12
+                        },
+                        "paddings": {
+                            "bottom": 4,
+                            "left": 7,
+                            "right": 7,
+                            "top": 5
+                        },
+                        "text_color": "#000000",
+                        "version": 1,
+                        "visible": false
+                    },
+                    "title": {
+                        "font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 16,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "margins": {
+                            "bottom": 10,
+                            "left": 10,
+                            "right": 10,
+                            "top": 10
+                        },
+                        "text_color": "#000000",
+                        "text_flags": 132,
+                        "version": 1,
+                        "visible": false
+                    }
+                },
                 "stab_bound_markers": true,
                 "stored_views": {
                 },
+                "t_title": "{func_name}",
                 "ts_flipped": false,
                 "ts_mode": "T+S",
-                "x_max": 828.0195410639886,
-                "x_min": -1148.815694407755,
+                "x_max": 4866.361602770949,
+                "x_min": -1435.2089543991578,
                 "x_title": "{elem}, {elem_param} {(unit)}",
                 "x_unit": "cm",
-                "y_max": 1.2512328260004166,
-                "y_min": -2.8598327260798593,
+                "y_max": 6.851736476741409,
+                "y_min": -6.907263645542264,
                 "y_title": "Stability parameter {stab_mode}",
                 "y_unit": "none"
+            }
+        },
+        {
+            "function": {
+                "calcEmptySpaces": false,
+                "calcMediumEnds": false,
+                "calcSpaceMids": false
+            },
+            "type": "BeamParamsAtElems",
+            "window": {
+                "ts_mode": "T+S"
             }
         },
         {
@@ -283,11 +1107,31 @@
                             },
                             "step": {
                                 "unit": "mm",
-                                "value": 0.713
+                                "value": 0.925
                             },
                             "stop": {
                                 "unit": "mm",
-                                "value": 55
+                                "value": 3
+                            },
+                            "use_step": false
+                        }
+                    },
+                    {
+                        "element_index": 2,
+                        "param": "L",
+                        "range": {
+                            "points": 100,
+                            "start": {
+                                "unit": "mm",
+                                "value": 0
+                            },
+                            "step": {
+                                "unit": "mm",
+                                "value": 0.1
+                            },
+                            "stop": {
+                                "unit": "mm",
+                                "value": 5
                             },
                             "use_step": false
                         }
@@ -303,31 +1147,11 @@
                             },
                             "step": {
                                 "unit": "mm",
-                                "value": 0.163
+                                "value": 0.7250000000000001
                             },
                             "stop": {
                                 "unit": "mm",
-                                "value": 16.3
-                            },
-                            "use_step": false
-                        }
-                    },
-                    {
-                        "element_index": 4,
-                        "param": "L",
-                        "range": {
-                            "points": 100,
-                            "start": {
-                                "unit": "mm",
-                                "value": 0
-                            },
-                            "step": {
-                                "unit": "mm",
-                                "value": 0.1
-                            },
-                            "stop": {
-                                "unit": "mm",
-                                "value": 10
+                                "value": 101
                             },
                             "use_step": false
                         }
@@ -343,11 +1167,11 @@
                             },
                             "step": {
                                 "unit": "mm",
-                                "value": 0.163
+                                "value": 2.0998512711748845
                             },
                             "stop": {
                                 "unit": "mm",
-                                "value": 16.3
+                                "value": 173.75142388753002
                             },
                             "use_step": false
                         }
@@ -363,11 +1187,31 @@
                             },
                             "step": {
                                 "unit": "mm",
-                                "value": 1.122
+                                "value": 0.24
                             },
                             "stop": {
                                 "unit": "mm",
-                                "value": 52.00000000000001
+                                "value": 19.000000000000004
+                            },
+                            "use_step": false
+                        }
+                    },
+                    {
+                        "element_index": 8,
+                        "param": "L",
+                        "range": {
+                            "points": 100,
+                            "start": {
+                                "unit": "mm",
+                                "value": 0
+                            },
+                            "step": {
+                                "unit": "mm",
+                                "value": 0.12
+                            },
+                            "stop": {
+                                "unit": "mm",
+                                "value": 12
                             },
                             "use_step": false
                         }
@@ -383,31 +1227,11 @@
                             },
                             "step": {
                                 "unit": "mm",
-                                "value": 1
+                                "value": 0.24
                             },
                             "stop": {
                                 "unit": "mm",
-                                "value": 67
-                            },
-                            "use_step": false
-                        }
-                    },
-                    {
-                        "element_index": 10,
-                        "param": "L",
-                        "range": {
-                            "points": 100,
-                            "start": {
-                                "unit": "mm",
-                                "value": 0
-                            },
-                            "step": {
-                                "unit": "mm",
-                                "value": 0.1
-                            },
-                            "stop": {
-                                "unit": "mm",
-                                "value": 10
+                                "value": 19.000000000000004
                             },
                             "use_step": false
                         }
@@ -423,11 +1247,71 @@
                             },
                             "step": {
                                 "unit": "mm",
-                                "value": 0.22
+                                "value": 2.0998512711748845
                             },
                             "stop": {
                                 "unit": "mm",
-                                "value": 5
+                                "value": 173.75142388753002
+                            },
+                            "use_step": false
+                        }
+                    },
+                    {
+                        "element_index": 14,
+                        "param": "L",
+                        "range": {
+                            "points": 100,
+                            "start": {
+                                "unit": "mm",
+                                "value": 0
+                            },
+                            "step": {
+                                "unit": "mm",
+                                "value": 0.4820000000000001
+                            },
+                            "stop": {
+                                "unit": "mm",
+                                "value": 44.199999999999996
+                            },
+                            "use_step": false
+                        }
+                    },
+                    {
+                        "element_index": 15,
+                        "param": "L",
+                        "range": {
+                            "points": 100,
+                            "start": {
+                                "unit": "mm",
+                                "value": 0
+                            },
+                            "step": {
+                                "unit": "mm",
+                                "value": 0.018000000000000002
+                            },
+                            "stop": {
+                                "unit": "mm",
+                                "value": 1.8000000000000003
+                            },
+                            "use_step": false
+                        }
+                    },
+                    {
+                        "element_index": 16,
+                        "param": "L",
+                        "range": {
+                            "points": 100,
+                            "start": {
+                                "unit": "mm",
+                                "value": 0
+                            },
+                            "step": {
+                                "unit": "mm",
+                                "value": 0.03
+                            },
+                            "stop": {
+                                "unit": "mm",
+                                "value": 3
                             },
                             "use_step": false
                         }
@@ -440,19 +1324,232 @@
                 "cursor_enabled": true,
                 "cursor_mode": "Both",
                 "elem_bound_markers": true,
+                "format": {
+                    "axis_x": {
+                        "grid_pen": {
+                            "color": "#c8c8c8",
+                            "style": 3,
+                            "width": 0
+                        },
+                        "grid_visible": true,
+                        "id": "b879cab535af47faa7d7341d37ad13a6",
+                        "labels_color": "#000000",
+                        "labels_font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 13,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "labels_inside": false,
+                        "labels_margin": 3,
+                        "labels_rotation": 0,
+                        "labels_visible": true,
+                        "number_format": "gb",
+                        "number_precision": 10,
+                        "offset": 0,
+                        "pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "reversed": false,
+                        "scale_log": false,
+                        "subgrid_pen": {
+                            "color": "#dcdcdc",
+                            "style": 3,
+                            "width": 0
+                        },
+                        "subgrid_visible": false,
+                        "subtick_len_in": 2,
+                        "subtick_len_out": 0,
+                        "subtick_pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "subtick_visible": true,
+                        "tick_count": 5,
+                        "tick_len_in": 5,
+                        "tick_len_out": 0,
+                        "tick_offset": 0,
+                        "tick_pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "tick_strategy": 0,
+                        "tick_visible": true,
+                        "title_color": "#000000",
+                        "title_font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 14,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "title_margin_in": 3,
+                        "title_margin_out": 5,
+                        "version": 1,
+                        "visible": true,
+                        "zero_pen": {
+                            "color": "#c8c8c8",
+                            "style": 1,
+                            "width": 0
+                        }
+                    },
+                    "axis_y": {
+                        "grid_pen": {
+                            "color": "#c8c8c8",
+                            "style": 3,
+                            "width": 0
+                        },
+                        "grid_visible": true,
+                        "id": "ddf788808d814190bfdd48d3d2058ac8",
+                        "labels_color": "#000000",
+                        "labels_font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 13,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "labels_inside": false,
+                        "labels_margin": 5,
+                        "labels_rotation": 0,
+                        "labels_visible": true,
+                        "number_format": "gb",
+                        "number_precision": 10,
+                        "offset": 0,
+                        "pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "reversed": false,
+                        "scale_log": false,
+                        "subgrid_pen": {
+                            "color": "#dcdcdc",
+                            "style": 3,
+                            "width": 0
+                        },
+                        "subgrid_visible": false,
+                        "subtick_len_in": 2,
+                        "subtick_len_out": 0,
+                        "subtick_pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "subtick_visible": true,
+                        "tick_count": 5,
+                        "tick_len_in": 5,
+                        "tick_len_out": 0,
+                        "tick_offset": 0,
+                        "tick_pen": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "tick_strategy": 0,
+                        "tick_visible": true,
+                        "title_color": "#000000",
+                        "title_font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 14,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "title_margin_in": 10,
+                        "title_margin_out": 5,
+                        "version": 1,
+                        "visible": true,
+                        "zero_pen": {
+                            "color": "#c8c8c8",
+                            "style": 1,
+                            "width": 0
+                        }
+                    },
+                    "legend": {
+                        "back_color": "#ffffff",
+                        "border": {
+                            "color": "#000000",
+                            "style": 1,
+                            "width": 0
+                        },
+                        "font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 13,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "icon_margin": 7,
+                        "icon_size": {
+                            "height": 18,
+                            "width": 32
+                        },
+                        "location": 34,
+                        "margins": {
+                            "bottom": 12,
+                            "left": 12,
+                            "right": 12,
+                            "top": 12
+                        },
+                        "paddings": {
+                            "bottom": 4,
+                            "left": 7,
+                            "right": 7,
+                            "top": 5
+                        },
+                        "text_color": "#000000",
+                        "version": 1,
+                        "visible": false
+                    },
+                    "title": {
+                        "font": {
+                            "bold": false,
+                            "family": ".AppleSystemUIFont",
+                            "italic": false,
+                            "size": 16,
+                            "strikeout": false,
+                            "underline": false
+                        },
+                        "margins": {
+                            "bottom": 10,
+                            "left": 10,
+                            "right": 10,
+                            "top": 10
+                        },
+                        "text_color": "#000000",
+                        "text_flags": 132,
+                        "version": 1,
+                        "visible": false
+                    }
+                },
                 "stored_views": {
                 },
+                "t_title": "{func_name}",
                 "ts_flipped": false,
                 "ts_mode": "T+S",
-                "x_max": 199.57599999999996,
-                "x_min": -1.9759999999999998,
+                "x_max": 805.917171738693,
+                "x_min": -7.979377938006861,
                 "x_title": "{elem_labels} {(unit)}",
                 "x_unit": "mm",
-                "y_max": 360.053784902525,
-                "y_min": 252.09652883451844,
+                "y_max": 696.240156567264,
+                "y_min": 39.82526726624894,
                 "y_title": "{func_mode} {(unit)}",
                 "y_unit": "mkm"
             }
+        },
+        {
+            "type": "SchemaParams"
         }
     ]
 }

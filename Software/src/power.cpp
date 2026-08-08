@@ -4,45 +4,63 @@
 
 Power::Power() :
     _adc(Pins::Power::Cs),
-    _nextPowerAverage(0)
+    _powerReading(0)
 {
-    memset(_powerAverages, 0, sizeof(_powerAverages));
 }
 
 void Power::tick()
 {
-    _powerAverages[_nextPowerAverage] = _adc.readValue(3);
-    _nextPowerAverage = (_nextPowerAverage + 1) % _averageCount;
+    uint16_t adcValue = _adc.readValue(3);
+    _powerReading = (uint16_t)((1.0 - _filterAlpha) * adcValue + _filterAlpha * _powerReading );
 }
 
-float Power::getBatteryVoltage()
+#ifdef ENABLE_SIMULATION
+void Power::setSimulation(const Status* simulatedStatus)
 {
-    int16_t adcValue = _adc.readValue(1);
-    return Calibration::Battery::Voltage::Offset + (Calibration::Battery::Voltage::Slope * adcValue);
+    _simulatedStatus = simulatedStatus;
 }
+#endif
 
-float Power::getBatteryCurrent()
+Power::Status Power::getStatus()
 {
-    int16_t adcValue = _adc.readValue(2);
-    return Calibration::Battery::Current::Offset + (Calibration::Battery::Current::Slope * adcValue);
-}
-
-bool Power::isBatteryCharging()
-{
-    // Charge state is a logic low when charging and this is routed to an ADC channel
-    uint16_t adcValue = _adc.readValue(0);
-    return adcValue < _adc.max / 2;
-}
-
-float Power::getLaserOutputPower()
-{
-    int32_t adcValue = 0;
-
-    for (uint8_t idx = 0; idx < _averageCount; idx++)
+    #ifdef ENABLE_SIMULATION
+    if (_simulatedStatus != nullptr)
     {
-        adcValue += _powerAverages[idx];
+        return *_simulatedStatus;
+    }
+    #endif
+
+    Status status{};
+    uint16_t adcValue;
+
+    adcValue = _adc.readValue(1);
+    status.adc.batteryVoltage = adcValue;
+    status.batteryVoltage = Calibration::Battery::Voltage::Offset + (Calibration::Battery::Voltage::Slope * adcValue);
+
+    adcValue = _adc.readValue(2);
+    status.adc.batteryCurrent = adcValue;
+    status.batteryCurrent = Calibration::Battery::Current::Offset + (Calibration::Battery::Current::Slope * adcValue);
+
+    // Charge state is a logic low when charging and this is routed to an ADC channel
+    adcValue = _adc.readValue(0);
+    status.adc.batteryCharging = adcValue;
+    status.batteryCharging = adcValue < _adc.max / 2;
+
+    // Laser Output Power
+    adcValue = _powerReading;
+    status.adc.laserOutputPower = adcValue;
+
+    // For output power calibration we store a power
+    // and ADC value and assume p=0 when adc=0;
+
+    if (adcValue != 0)
+    {
+        float cp = settings.calibration.power.output;
+        float cadc = settings.calibration.power.adc;
+        float slope = cp / cadc;
+        status.laserOutputPower = slope * adcValue;
     }
 
-    adcValue /= _averageCount;
-    return Calibration::LaserMonitor::Offset + (Calibration::LaserMonitor::Slope * adcValue);
+    return status;
 }
+

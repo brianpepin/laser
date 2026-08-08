@@ -4,21 +4,39 @@
 class Power
 {
 public:
+
+    struct Status
+    {
+        float batteryVoltage;
+        float batteryCurrent;
+        float laserOutputPower;
+        bool batteryCharging;
+
+        struct Adc
+        {
+            uint16_t batteryVoltage;
+            uint16_t batteryCurrent;
+            uint16_t batteryCharging;            
+            uint16_t laserOutputPower;
+        } adc;
+    };
+
     Power();
-
     void tick();
+    Status getStatus();
 
-    float getBatteryVoltage();
-    float getBatteryCurrent();
-    bool isBatteryCharging();
-
-    float getLaserOutputPower();
+    #ifdef ENABLE_SIMULATION
+    void setSimulation(const Status* simulatedStatus);
+    #endif
 
 private:
 
-    constexpr static uint8_t _averageCount = 64;
+    constexpr static float _filterAlpha = .9;
 
     ADC104S021 _adc;
-    int16_t _powerAverages[_averageCount];
-    uint8_t _nextPowerAverage;
+    uint16_t _powerReading;
+
+    #ifdef ENABLE_SIMULATION
+    const Status* _simulatedStatus = nullptr;
+    #endif
 };
