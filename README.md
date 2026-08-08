@@ -1,6 +1,13 @@
 # The Laser Project
 This repository contains a design for a diode pumped solid state laser that emits a green 532nm beam.  The unit is battery operated and rechargable with a runtime of approximately 30 minutes.
 
+## Versions
+Version 2.1 of the hardware and software is now live. Here is a summary of the changes:
+1. The control board now uses a more modern MCU. Display refreshes are 8x faster and I was able to remove a number of components from the board due to the enhanced peripheral support on the new MCU.
+2. Encoders are now velocity sensitive.
+3. Calibration for the output power monitor now can be done through the UI.
+4. The laser design has changed and the maximum output power is now 3x what it was in version 1.
+
 ![image](Doc/Laser.jpg)
 
 ## Repository Organization
@@ -17,6 +24,9 @@ The Hardware directory contains KiCad files for schematics and board designs for
 ![image](Doc/TECBoard.jpg)
 
 3. The **Control** board is a small MCU and display for running the laser.  The board is based on the aging ATMEGA328p....but it would be easy to swap this to a newer MCU.
+
+**Update:** Version 2.1 of the hardware now uses AVR128DB64 as it's MCU. This MCU has a lot more memory, a much faster speed, and perhipherial updates (like controllable schmitt triggers on inputs) that greatly simplified the rest of the board.
+
 ![image](Doc/ControlBoard.jpg)
 
 The power and TEC boards must both be bonded to heat sinks on the underside of the board using a non-conductive thermal layer. Boards use Deans connectors for high power and these connectors were modified (pins trimmed) so when soldered the back of the board remains relatively flat.
